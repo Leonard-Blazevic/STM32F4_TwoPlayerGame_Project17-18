@@ -1,3 +1,40 @@
+# Keil stuff
+*.axf
+*.htm
+*.Inp
+*.map
+*.tra
+*.dep
+*.__i
+*.crf
+*.d
+*.o
+*.lst
+*.lnp
+*.bak
+*.Vishwas
+*.bin
+*.fed
+*._2i
+*.l1p
+*.l2p
+*.iex
+.#*
+*.uvgui.*
+*.uvopt
+*.html
+*.js
+
+# Altium stuff
+*/History/*
+*.PrjPCBStructure
+*.SchDocPreview
+*.PcbDocPreview
+*\__Previews
+*\History
+*.PrjPcbStructure
+*~$*
+
 # Prerequisites
 *.d
 
@@ -45,8 +82,11 @@
 # Kernel Module Compile Results
 *.mod*
 *.cmd
-.tmp_versions/
 modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Misc
+*.gif
+*.png
