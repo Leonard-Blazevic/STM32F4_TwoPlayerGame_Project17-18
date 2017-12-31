@@ -21,6 +21,7 @@
 *.iex
 .#*
 *.uvgui.*
+*.uvguix.*
 *.uvopt
 *.html
 *.js
