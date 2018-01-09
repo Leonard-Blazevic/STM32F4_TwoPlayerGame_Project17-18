@@ -133,12 +133,12 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <Capability>1</Capability>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -395,10 +395,27 @@
               <FileType>1</FileType>
               <FilePath>.\Source\main.c</FilePath>
             </File>
+            <File>
+              <FileName>input.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\input.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Discovery</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f429i_discovery.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f429i_discovery_l3gd20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_l3gd20.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>Headers</GroupName>
@@ -407,6 +424,11 @@
               <FileName>main.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\input.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -417,6 +439,46 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Source\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_syscfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,5 +1,13 @@
-#include "main.h"
+#include <main.h>
+#include <input.h>
 
 int main (void){
-	while(1);
+	
+	gpio_led_init();
+	button_init();
+	gyro_init();
+	
+	while(1) {
+		MEMS();
+	}
 }
