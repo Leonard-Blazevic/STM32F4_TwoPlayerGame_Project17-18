@@ -1,4 +1,5 @@
 # Keil stuff
+*.scvd
 *.axf
 *.htm
 *.Inp
