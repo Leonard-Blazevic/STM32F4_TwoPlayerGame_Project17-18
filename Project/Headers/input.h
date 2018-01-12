@@ -74,7 +74,11 @@ static void queue(uint32_t irq);
 void gyro_init(void);
 void read_ang_rate (float* pfData);
 void gyro_calibration (float* GyroData);
-void MEMS (void);
-void LEDTest (void);
+uint8_t MEMS (void);
+void LEDTest (uint8_t test_dir);
+
+void TimingDelay_Decrement(void);
+void Delay(__IO uint32_t nTime);
+
 
 #endif

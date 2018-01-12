@@ -6,6 +6,11 @@
 static uint8_t wait_queue = 0;
 float Buffer[2];
 float Gyro[2];
+float xangle=0;
+float yangle=0;
+
+
+__IO uint32_t TimingDelay;
 
 
 void gpio_led_init()
@@ -213,9 +218,6 @@ void gpio_led_toggle(uint8_t LED_ID)
 }
 
 
-
-
-
 void read_ang_rate (float* pfData)
 {
   uint8_t tmpbuffer[4] ={0};
@@ -236,62 +238,73 @@ void read_ang_rate (float* pfData)
 		// 2Ah, 2Bh -> y axis angular rate
 }
 	
-void gyro_calibration (float *GyroData)
-{
-	float X_BiasError, Y_BiasError = 0.0;
-  uint32_t BiasErrorSplNbr = 100;
-  int i = 0;
-  
-  for (i = 0; i < BiasErrorSplNbr; i++)
-  {
-    read_ang_rate(GyroData);
-    X_BiasError += GyroData[0];
-    Y_BiasError += GyroData[1];
-  }
-  
-  X_BiasError /= BiasErrorSplNbr;
-  Y_BiasError /= BiasErrorSplNbr;
-  
-  // offset 
-  GyroData[0] = X_BiasError;
-  GyroData[1] = Y_BiasError;
-}
 
-void MEMS () 
+uint8_t MEMS () 
 {
-	read_ang_rate(Buffer);
-	
-  LEDTest();
-
-}
-
-void LEDTest()
-	
-{
-	uint8_t xvalue, yvalue;
-	xvalue=(uint8_t)(ABS(Buffer[0]));
-	yvalue=(uint8_t)(ABS(Buffer[1]));
-	
-	if (yvalue>xvalue+40) {
-		if (Buffer[1] < -50) {
-			STM_EVAL_LEDOff(LED3);
-			STM_EVAL_LEDOn(LED4);
+	int i;
+	for (i=0; i<1000; i++) {
+		
+		read_ang_rate(Buffer);
+		
+		if (Buffer[0]>20 || Buffer[0]<-20) {
+			xangle+=Buffer[0]/100000;
 		}
-		else if (Buffer[1] > 50) {
-			STM_EVAL_LEDOn(LED3);
-			STM_EVAL_LEDOff(LED4);
+		if (Buffer[1]>20 || Buffer[1] <-20) {
+			yangle+=Buffer[1]/100000;
 		}
 	}
-	else if (xvalue>yvalue+40) {
-		if (Buffer[0] < -50) {
-			STM_EVAL_LEDOn(LED3);
-			STM_EVAL_LEDOn(LED4);
+	
+	
+	if (xangle > 10) {
+		return 0x01;
+	}
+	else if (xangle < -10){
+		return 0x02;
+	}
+	else {
+		if (yangle > 10) {
+			return 0x04;
 		}
-		else if (Buffer[0] > 50) {
-			STM_EVAL_LEDOff(LED3);
-			STM_EVAL_LEDOff(LED4);
+		else if (yangle < -10) {
+			return 0x08;
+		}
+		else {
+			return 0x00;
 		}
 	}
-
 }
+
+void LEDTest(uint8_t test_dir)
+{
+		switch (test_dir) {
+			case 0x00:
+				STM_EVAL_LEDOff(LED3);
+				STM_EVAL_LEDOff(LED4);
+				break;
+			case 0x01:
+				STM_EVAL_LEDOff(LED3);
+				STM_EVAL_LEDOff(LED4);
+				break;
+			case 0x02:
+				STM_EVAL_LEDOn(LED3);
+				STM_EVAL_LEDOn(LED4);
+				break;
+			case 0x04:
+				STM_EVAL_LEDOn(LED3);
+				STM_EVAL_LEDOff(LED4);
+				break;
+			case 0x08:
+				STM_EVAL_LEDOff(LED3);
+				STM_EVAL_LEDOn(LED4);
+				break;
+		}
+}
+
+
+
+
+
+
+
+
 
