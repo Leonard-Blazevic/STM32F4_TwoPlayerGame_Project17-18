@@ -396,9 +396,14 @@
               <FilePath>.\Source\main.c</FilePath>
             </File>
             <File>
-              <FileName>input.c</FileName>
+              <FileName>gyro.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\input.c</FilePath>
+              <FilePath>.\Source\gyro.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\test.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -426,9 +431,9 @@
               <FilePath>.\Headers\main.h</FilePath>
             </File>
             <File>
-              <FileName>input.h</FileName>
+              <FileName>gyro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Headers\input.h</FilePath>
+              <FilePath>.\Headers\gyro.h</FilePath>
             </File>
           </Files>
         </Group>
