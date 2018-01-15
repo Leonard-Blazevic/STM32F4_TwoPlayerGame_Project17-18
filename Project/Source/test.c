@@ -20,26 +20,26 @@ void GpioLEDInit()
 }
 
 
-void LEDTest(uint8_t test_dir)
+void LEDTest(direction test_dir)
 {
 		switch (test_dir) {
-			case 0:
+			case NoChange:
 				STM_EVAL_LEDOff(LED3);
 				STM_EVAL_LEDOff(LED4);
 				break;
-			case 1:
+			case Down:
 				STM_EVAL_LEDOff(LED3);
 				STM_EVAL_LEDOff(LED4);
 				break;
-			case 2:
+			case Left:
 				STM_EVAL_LEDOn(LED3);
 				STM_EVAL_LEDOff(LED4);
 				break;
-			case 3:
+			case Up:
 				STM_EVAL_LEDOn(LED3);
 				STM_EVAL_LEDOn(LED4);
 				break;
-			case 4:
+			case Right:
 				STM_EVAL_LEDOff(LED3);
 				STM_EVAL_LEDOn(LED4);
 				break;

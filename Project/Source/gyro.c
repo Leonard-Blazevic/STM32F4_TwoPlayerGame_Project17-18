@@ -47,7 +47,7 @@ void ReadAngRate(float* GyroData)
 }
 
 
-uint8_t GetDirection () 
+direction GetDirection () 
 {
 	int i;
 	for (i=0; i<GyroSampleNum; i++) {
@@ -64,20 +64,20 @@ uint8_t GetDirection ()
 
 	
 	if (xangle > Xangle_down) {
-		return 1;
+		return Down;
 	}
 	else if (xangle < Xangle_up){
-		return 3;
+		return Up;
 	}
 	else {
 		if (yangle > Yangle_left) {
-			return 2;
+			return Left;
 		}
 		else if (yangle < Yangle_right) {
-			return 4;
+			return Right;
 		}
 		else {
-			return 0;
+			return NoChange;
 		}
 	}
 }

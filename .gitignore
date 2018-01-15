@@ -93,3 +93,5 @@ dkms.conf
 # Misc
 *.gif
 *.png
+Project/Headers/main.h
+Project/Source/main.c

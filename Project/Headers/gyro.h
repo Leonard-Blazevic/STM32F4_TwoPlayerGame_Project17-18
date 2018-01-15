@@ -27,8 +27,17 @@
 #define Yrate_right							-10
 
 
+typedef enum {
+	NoChange = 0,
+	Down = 1,
+	Left = 2,
+	Up = 3,
+	Right = 4,
+} direction;
+
+
 void GyroInit(void);
-uint8_t GetDirection(void);
+direction GetDirection(void);
 void GpioLEDInit(void);
 void ReadAngRate (float* GyroData);
-void LEDTest (uint8_t test_dir);
+void LEDTest (direction test_dir);
