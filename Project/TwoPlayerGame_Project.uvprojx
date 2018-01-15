@@ -134,10 +134,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <DriverSelection>4100</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -299,7 +299,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x50000</Size>
+                <Size>0x30000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F429_439xx,USE_STM32F429I_DISCO,</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Headers;.\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;.\..\Libraries\CMSIS\Include;.\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;.\..\Utilities\STM32F429I-Discovery</IncludePath>
+              <IncludePath>.\Headers;..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\Utilities\STM32F429I-Discovery</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -358,7 +358,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>0</umfTarg>
+            <umfTarg>1</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -395,6 +395,16 @@
               <FileType>1</FileType>
               <FilePath>.\Source\main.c</FilePath>
             </File>
+            <File>
+              <FileName>lcdfunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\lcdfunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>bulletQueueFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\bulletQueueFunctions.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -424,6 +434,21 @@
               <FileName>main.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdfunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\lcdfunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\data.h</FilePath>
+            </File>
+            <File>
+              <FileName>bulletQueueFunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\bulletQueueFunctions.h</FilePath>
             </File>
           </Files>
         </Group>

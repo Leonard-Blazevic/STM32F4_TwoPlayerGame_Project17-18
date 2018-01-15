@@ -1,0 +1,11 @@
+void StartScreen(void);
+void EndScreen(int pobjednik);
+PlayerPosition TankInit(int choosePlayer);
+BulletPosition BulletInit(PlayerPosition player);
+void BulletMove(BulletPosition *bullet);
+void TankMove(PlayerPosition *player1, int choosePlayer);
+void TankRemove(PlayerPosition player);
+void BulletRemove(BulletPosition bullet);
+void TankRotate(PlayerPosition *player1, int next, int choosePlayer);
+void score(char p1, char p2);
+void ClearScreen (void);
