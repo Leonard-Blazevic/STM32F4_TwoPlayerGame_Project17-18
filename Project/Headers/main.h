@@ -14,6 +14,7 @@
 #include "lcdfunctions.h"
 #include "bulletQueueFunctions.h"
 #include "input.h"
+#include "mainLogicFunctions.h"
 
 #endif
 

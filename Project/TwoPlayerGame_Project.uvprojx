@@ -410,6 +410,11 @@
               <FileType>1</FileType>
               <FilePath>.\Source\input.c</FilePath>
             </File>
+            <File>
+              <FileName>mainLogicFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\mainLogicFunctions.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -454,6 +459,11 @@
               <FileName>input.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\input.h</FilePath>
+            </File>
+            <File>
+              <FileName>mainLogicFunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\mainLogicFunctions.h</FilePath>
             </File>
           </Files>
         </Group>
