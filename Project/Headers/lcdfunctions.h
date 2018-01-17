@@ -12,6 +12,13 @@ typedef struct {
 	int life;
 } BulletPosition;
 
+typedef enum{
+	UP = 1,
+	RIGHT = 2,
+	DOWN = 3,
+	LEFT = 4,
+}direction;
+
 void StartScreen(void);
 void EndScreen(int pobjednik);
 Position TankInit(int choosePlayer);

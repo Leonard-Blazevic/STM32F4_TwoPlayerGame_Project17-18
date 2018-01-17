@@ -7,21 +7,21 @@
 #define rb 3 			/* velicina metka */
 
 #define	xstart1 120   /* pocetne pozicije prvog igraca */
-#define ystart1 20
+#define ystart1 25
 #define xstart2 120		/* pocetne pozicije drugog igraca */
 #define ystart2	300
 
-#define	xScreenStart 20   /* pocetne pozicije prvog igraca */
-#define yScreenStart 40
-#define xScreenEnd 220		/* pocetne pozicije drugog igraca */
-#define yScreenEnd	300
+#define	xScreenStart 25  
+#define yScreenStart 25
+#define xScreenEnd 215		
+#define yScreenEnd	295
 
 #define xt 10	/* za koliko se mijenja pozicija tenka */
 #define yt 10
 #define xb 15	/* za koliko se mijenja pozicija metka */
 #define yb 15   
 
-void StartScreen(void){         /* pocetni ekran */
+void StartScreen(void){         
 	LCD_Init();
 	LCD_LayerInit();
 	LTDC_Cmd(ENABLE);
@@ -39,7 +39,7 @@ void ClearScreen (void) {
 	LCD_Clear(LCD_COLOR_WHITE);
 }
 
-void EndScreen(int pobjednik){					/* ekran na kraju */
+void EndScreen(int pobjednik){					
 	LCD_Clear(LCD_COLOR_WHITE);															
 	LCD_SetFont(&Font16x24);
 	LCD_SetTextColor(LCD_COLOR_BLACK); 
@@ -49,31 +49,31 @@ void EndScreen(int pobjednik){					/* ekran na kraju */
 	else LCD_DisplayStringLine(LINE(7), (uint8_t*)"       2   ");
 }
 
-Position TankInit(int choosePlayer){					/* pocetna pozicija prvog igraca */
-	Position player1;
+Position TankInit(int choosePlayer){					
+	Position player;
 					
 	if(choosePlayer == 0){
 		LCD_SetTextColor(LCD_COLOR_BLUE);
-		player1.positionX = xstart1;
-		player1.positionY = ystart1;
-		player1.direction = 1;
-		LCD_FillTriangle(player1.positionX+a/2,player1.positionX-a/2,player1.positionX,player1.positionY+r,player1.positionY+r,player1.positionY+r+a);
+		player.positionX = xstart1;
+		player.positionY = ystart1;
+		player.direction = UP;
+		LCD_FillTriangle(player.positionX+a/2, player.positionX-a/2, player.positionX, player.positionY+r, player.positionY+r, player.positionY+r+a);
 	}
 	else{
-		LCD_SetTextColor(LCD_COLOR_RED);				/* x=120 , y=20 , smjer=1(prema dolje) */
-		player1.positionX = xstart2;
-		player1.positionY = ystart2;
-		player1.direction = 3;
-		LCD_FillTriangle(player1.positionX-a/2,player1.positionX+a/2,player1.positionX,player1.positionY-r,player1.positionY-r,player1.positionY-r-a);
+		LCD_SetTextColor(LCD_COLOR_RED);				
+		player.positionX = xstart2;
+		player.positionY = ystart2;
+		player.direction = DOWN;
+		LCD_FillTriangle(player.positionX-a/2, player.positionX+a/2, player.positionX, player.positionY-r, player.positionY-r, player.positionY-r-a);
 	}
 	
-	LCD_DrawFullCircle(player1.positionX, player1.positionY, r);
+	LCD_DrawFullCircle(player.positionX, player.positionY, r);
 	
-	return player1;
+	return player;
 }
 
-BulletPosition BulletInit(Position player){				/* pocetna pozicija metka prvog igraca */
-	LCD_SetTextColor(LCD_COLOR_BLACK);					/* prima: x i y poziciju tenka i smjer prema kojem je okrenut */
+BulletPosition BulletInit(Position player){				
+	LCD_SetTextColor(LCD_COLOR_BLACK);					
 	
 	BulletPosition bullet;
 	int x,y;
@@ -81,13 +81,13 @@ BulletPosition BulletInit(Position player){				/* pocetna pozicija metka prvog i
 	x=player.positionX;
 	y=player.positionY;
 	
-	if (player.direction==1){
+	if (player.direction==UP){
 		y = y+a+r+rb>0 ? y+a+r+rb : y;
 	}
-	else if (player.direction==2){
+	else if (player.direction==RIGHT){
 		x = x-r-a-rb>0 ? x-r-a-rb : x;
 	}
-	else if (player.direction==3){
+	else if (player.direction==DOWN){
 		y = y-r-a-rb>0 ? y-r-a-rb : y;
 	}
 	else{
@@ -104,19 +104,19 @@ BulletPosition BulletInit(Position player){				/* pocetna pozicija metka prvog i
 	return bullet;
 }
 
-void BulletMove(BulletPosition *bullet){			/* pomicanje metka */			/* prima  poziciju metka */
+void BulletMove(BulletPosition *bullet){			
 	int x = bullet->position.positionX,y = bullet->position.positionY;
 	
 	BulletRemove(*bullet);
 	LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-	if(bullet->position.direction==1){							/* smjer 1=dolje, 2=lijevo, 3=gore, 4=desno */
+	if(bullet->position.direction==UP){							
 		y+=yb;																																					
 	}
-	else if(bullet->position.direction==2 && x-xb > 0){
+	else if(bullet->position.direction==RIGHT && x-xb > 0){
 		x-=xb;
 	}
-	else if(bullet->position.direction==3 && y-yb > 0){
+	else if(bullet->position.direction==DOWN && y-yb > 0){
 		y-=yb;
 	}
 	else{
@@ -129,112 +129,105 @@ void BulletMove(BulletPosition *bullet){			/* pomicanje metka */			/* prima  poz
 	bullet->position.positionY = y;
 }
 
-void BulletRemove(BulletPosition bullet){					/* brise metak */
-	LCD_SetTextColor(LCD_COLOR_WHITE);		/* prima  poziciju metka */
+void BulletRemove(BulletPosition bullet){					
+	LCD_SetTextColor(LCD_COLOR_WHITE);		
 	LCD_DrawFullCircle(bullet.position.positionX, bullet.position.positionY, rb+2);
 }
 
-void TankMove(Position *player1, int choosePlayer){			/* pomicanje tenka prvog igraca */
-	int x,y;														/* prima  poziciju (srediste kruga) tenka i smjer prema kojem je okrenut */
-	x = player1->positionX;
-	y = player1->positionY;
+void TankMove(Position *player, int choosePlayer){			
+	int x,y;														
+	x = player->positionX;
+	y = player->positionY;
 	
-	TankRemove(*player1);
+	TankRemove(*player);
 	if(choosePlayer == 0)
 		LCD_SetTextColor(LCD_COLOR_BLUE);
 	else
 		LCD_SetTextColor(LCD_COLOR_RED);
 	
-	if(player1->direction==1){							/* smjer 1=dolje, 2=lijevo, 3=gore, 4=desno */
-		if(player1->positionY+yt <= yScreenEnd && player1->positionY+yt >= yScreenStart)	
-			y=player1->positionY+yt;																																		
+	if(player->direction==UP){							
+		if(player->positionY+yt <= yScreenEnd && player->positionY+yt >= yScreenStart)	
+			y=player->positionY+yt;																																		
 		LCD_DrawFullCircle(x, y, r);
 		LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
 	}
-	else if(player1->direction==2){
-		if(player1->positionX-xt <= xScreenEnd && player1->positionX-xt >= xScreenStart)
-			x=player1->positionX-xt;	
+	else if(player->direction==RIGHT){
+		if(player->positionX-xt <= xScreenEnd && player->positionX-xt >= xScreenStart)
+			x=player->positionX-xt;	
 		LCD_DrawFullCircle(x, y, r);
 		LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);
 	}
-	else if(player1->direction==3){
-		if(player1->positionY-yt <= yScreenEnd && player1->positionY-yt >= yScreenStart)
-			y=player1->positionY-yt;
+	else if(player->direction==DOWN){
+		if(player->positionY-yt <= yScreenEnd && player->positionY-yt >= yScreenStart)
+			y=player->positionY-yt;
 		LCD_DrawFullCircle(x, y, r);
 		LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
 	}
 	else{
-		if(player1->positionX+xt <= xScreenEnd && player1->positionX+xt >= xScreenStart)
-			x=player1->positionX+xt;	
+		if(player->positionX+xt <= xScreenEnd && player->positionX+xt >= xScreenStart)
+			x=player->positionX+xt;	
 		LCD_DrawFullCircle(x, y, r);
 		LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
 	}
 	
-	player1->positionX = x;
-	player1->positionY = y;
+	player->positionX = x;
+	player->positionY = y;
 }
 
-void TankRemove(Position player){			/* brisanje tenka */
-	LCD_SetTextColor(LCD_COLOR_WHITE);		/* prima poziciju tenka */
-	int x,y;
-	x=player.positionX;	
-	y=player.positionY;
-	if(player.direction==1){
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
+void TankRemove(Position player){			
+	LCD_SetTextColor(LCD_COLOR_WHITE);		
+	if(player.direction==UP){
+		LCD_DrawFullRect(player.positionX-r, player.positionY-r, 2*r+1, 2*r+a+1);
 	}
-	else if(player.direction==2){
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);
+	else if(player.direction==RIGHT){
+		LCD_DrawFullRect(player.positionX-r-a, player.positionY-r, 2*r+a+1, 2*r+1);
 	}
-	else if(player.direction==3){
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
+	else if(player.direction==DOWN){
+		LCD_DrawFullRect(player.positionX-r, player.positionY-r-a, 2*r+1, a+ 2*r+1);
 	}
 	else{
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
+		LCD_DrawFullRect(player.positionX-r, player.positionY-r, 2*r+a+1, 2*r+1);
 	}
 }
 
-void TankRotate(Position *player1, int next, int choosePlayer){    /* rotacija tenkova */
+void TankRotate(Position *player, int next, int choosePlayer){    
 	int x,y;
 	
-	x=player1->positionX;	
-	y=player1->positionY;
+	x=player->positionX;	
+	y=player->positionY;
 	
-	TankRemove(*player1);
+	TankRemove(*player);
 	if(choosePlayer == 0)
 		LCD_SetTextColor(LCD_COLOR_BLUE);
 	else
 		LCD_SetTextColor(LCD_COLOR_RED);
 	
-	if(player1->direction==1){
+	if(player->direction==UP){
 		if(next==0){
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
 		}
-		else{
+		else if(next==1){
 			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);   /* npr. smjer=2, next=0 => rotira u 1; next=1 =>rotira u 3 */
+			LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);   
 		}
 	}
-	else if(player1->direction==2){
+	else if(player->direction==RIGHT){
 		if(next==0){
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
 		}
-		else{
+		else if(next==1){
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
 		}
 	}
-	else if(player1->direction==3){
+	else if(player->direction==DOWN){
 		if(next==0){
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);
 		}
-		else{
+		else if(next==1){
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
 		}
@@ -244,19 +237,18 @@ void TankRotate(Position *player1, int next, int choosePlayer){    /* rotacija t
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
 		}
-		else{
+		else if(next==1){
 			LCD_DrawFullCircle(x, y, r);
 			LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
 		}
 	}
 	
-	player1->direction+= next == 0 ? (player1->direction==1 ? 3 : -1) : (player1->direction==4 ? -3 : 1);
+	player->direction+= next == 0 ? (player->direction==1 ? 3 : -1) : (player->direction==4 ? -3 : 1);
 }
 
-void score(char p1, char p2){						/* prikaz rezultata */
-	char buffer[10];											/* prima rezultat */
+void score(char p1, char p2){						
+	char buffer[10];											
 	LCD_SetFont(&Font12x12);
-	LCD_SetTextColor(LCD_COLOR_BLACK);
 	LCD_ClearLine(LINE(1));
 	LCD_ClearLine(LINE(2));
   LCD_SetTextColor(LCD_COLOR_BLACK);
