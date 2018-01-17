@@ -11,9 +11,9 @@
 #include "stm32f429i_discovery_l3gd20.h"
 #include <stdio.h>
 /*User Includes ------------------------------------------------------------------*/
-#include "data.h"
 #include "lcdfunctions.h"
 #include "bulletQueueFunctions.h"
+#include "input.h"
 
 #endif
 

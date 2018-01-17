@@ -1,4 +1,6 @@
+#include "lcdfunctions.h"
 #include "main.h"
+
 
 #define r 15			/* velicina tenka */
 #define a 10
@@ -47,8 +49,8 @@ void EndScreen(int pobjednik){					/* ekran na kraju */
 	else LCD_DisplayStringLine(LINE(7), (uint8_t*)"       2   ");
 }
 
-PlayerPosition TankInit(int choosePlayer){					/* pocetna pozicija prvog igraca */
-	PlayerPosition player1;
+Position TankInit(int choosePlayer){					/* pocetna pozicija prvog igraca */
+	Position player1;
 					
 	if(choosePlayer == 0){
 		LCD_SetTextColor(LCD_COLOR_BLUE);
@@ -70,7 +72,7 @@ PlayerPosition TankInit(int choosePlayer){					/* pocetna pozicija prvog igraca 
 	return player1;
 }
 
-BulletPosition BulletInit(PlayerPosition player){				/* pocetna pozicija metka prvog igraca */
+BulletPosition BulletInit(Position player){				/* pocetna pozicija metka prvog igraca */
 	LCD_SetTextColor(LCD_COLOR_BLACK);					/* prima: x i y poziciju tenka i smjer prema kojem je okrenut */
 	
 	BulletPosition bullet;
@@ -94,27 +96,27 @@ BulletPosition BulletInit(PlayerPosition player){				/* pocetna pozicija metka p
 
 	LCD_DrawFullCircle(x, y, rb);
 	
-	bullet.positionX = x;
-	bullet.positionY = y;
-	bullet.direction = player.direction;
+	bullet.position.positionX = x;
+	bullet.position.positionY = y;
+	bullet.position.direction = player.direction;
 	bullet.life = 5;
 	
 	return bullet;
 }
 
 void BulletMove(BulletPosition *bullet){			/* pomicanje metka */			/* prima  poziciju metka */
-	int x = bullet->positionX,y = bullet->positionY;
+	int x = bullet->position.positionX,y = bullet->position.positionY;
 	
 	BulletRemove(*bullet);
 	LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-	if(bullet->direction==1){							/* smjer 1=dolje, 2=lijevo, 3=gore, 4=desno */
+	if(bullet->position.direction==1){							/* smjer 1=dolje, 2=lijevo, 3=gore, 4=desno */
 		y+=yb;																																					
 	}
-	else if(bullet->direction==2 && x-xb > 0){
+	else if(bullet->position.direction==2 && x-xb > 0){
 		x-=xb;
 	}
-	else if(bullet->direction==3 && y-yb > 0){
+	else if(bullet->position.direction==3 && y-yb > 0){
 		y-=yb;
 	}
 	else{
@@ -123,16 +125,16 @@ void BulletMove(BulletPosition *bullet){			/* pomicanje metka */			/* prima  poz
 	
 	LCD_DrawFullCircle(x, y, rb);
 	
-	bullet->positionX = x;
-	bullet->positionY = y;
+	bullet->position.positionX = x;
+	bullet->position.positionY = y;
 }
 
 void BulletRemove(BulletPosition bullet){					/* brise metak */
 	LCD_SetTextColor(LCD_COLOR_WHITE);		/* prima  poziciju metka */
-	LCD_DrawFullCircle(bullet.positionX, bullet.positionY, rb+2);
+	LCD_DrawFullCircle(bullet.position.positionX, bullet.position.positionY, rb+2);
 }
 
-void TankMove(PlayerPosition *player1, int choosePlayer){			/* pomicanje tenka prvog igraca */
+void TankMove(Position *player1, int choosePlayer){			/* pomicanje tenka prvog igraca */
 	int x,y;														/* prima  poziciju (srediste kruga) tenka i smjer prema kojem je okrenut */
 	x = player1->positionX;
 	y = player1->positionY;
@@ -172,7 +174,7 @@ void TankMove(PlayerPosition *player1, int choosePlayer){			/* pomicanje tenka p
 	player1->positionY = y;
 }
 
-void TankRemove(PlayerPosition player){			/* brisanje tenka */
+void TankRemove(Position player){			/* brisanje tenka */
 	LCD_SetTextColor(LCD_COLOR_WHITE);		/* prima poziciju tenka */
 	int x,y;
 	x=player.positionX;	
@@ -195,7 +197,7 @@ void TankRemove(PlayerPosition player){			/* brisanje tenka */
 	}
 }
 
-void TankRotate(PlayerPosition *player1, int next, int choosePlayer){    /* rotacija tenkova */
+void TankRotate(Position *player1, int next, int choosePlayer){    /* rotacija tenkova */
 	int x,y;
 	
 	x=player1->positionX;	

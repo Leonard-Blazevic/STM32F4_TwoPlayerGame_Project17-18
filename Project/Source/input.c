@@ -7,8 +7,7 @@
 //	popInputBuffer() function. Returned data type is button (see input.h).
 //
 /*----------------------------------------------------------------------------*/
-#include <input.h>
-#include <led.h>
+#include <main.h>
 
 /*Private variables-----------------------------------------------------------*/
 static struct {
@@ -117,7 +116,7 @@ void inputInit(void){
 
 button popInputBuffer (void){
 	if (!inputBuffer.top)
-		return NULL;
+		return NOTPRESSED;
 	
 	disableButtonInterrupts();
 	

@@ -12,7 +12,7 @@ Pressing a button loads the input buffer, which can be unloaded using the
 popInputBuffer() function. Returned data type is button (see below).
 ------------------------------------------------------------------------------*/
 typedef enum {
-	NULL = 0,
+	NOTPRESSED = 0,
 	BT_1 = 1,
 	BT_2 = 2,
 	BT_3 = 3,
