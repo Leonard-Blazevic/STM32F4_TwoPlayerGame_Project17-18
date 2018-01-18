@@ -30,5 +30,5 @@ void BulletRemove(BulletPosition bullet);
 void TankRotate(Position *player1, int next, int choosePlayer);
 void score(char p1, char p2);
 void ClearScreen (void);
-
+void Write(char *p, int n);
 #endif

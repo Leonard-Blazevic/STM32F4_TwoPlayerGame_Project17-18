@@ -11,7 +11,7 @@
 #define xstart2 120		/* pocetne pozicije drugog igraca */
 #define ystart2	300
 
-#define	xScreenStart 25  
+#define	xScreenStart 25   
 #define yScreenStart 25
 #define xScreenEnd 215		
 #define yScreenEnd	295
@@ -37,6 +37,12 @@ void StartScreen(void){
 
 void ClearScreen (void) {
 	LCD_Clear(LCD_COLOR_WHITE);
+}
+
+void Write(char *p, int n){
+	LCD_SetFont(&Font16x24);
+  LCD_SetTextColor(LCD_COLOR_BLACK);
+	LCD_DisplayStringLine(LINE(n), (uint8_t*)p);	
 }
 
 void EndScreen(int pobjednik){					
@@ -76,28 +82,24 @@ BulletPosition BulletInit(Position player){
 	LCD_SetTextColor(LCD_COLOR_BLACK);					
 	
 	BulletPosition bullet;
-	int x,y;
-	
-	x=player.positionX;
-	y=player.positionY;
 	
 	if (player.direction==UP){
-		y = y+a+r+rb>0 ? y+a+r+rb : y;
+		player.positionY = player.positionY+a+r+rb>0 ? player.positionY+a+r+rb : player.positionY;
 	}
 	else if (player.direction==RIGHT){
-		x = x-r-a-rb>0 ? x-r-a-rb : x;
+		player.positionX = player.positionX-r-a-rb>0 ? player.positionX-r-a-rb : player.positionX;
 	}
 	else if (player.direction==DOWN){
-		y = y-r-a-rb>0 ? y-r-a-rb : y;
+		player.positionY = player.positionY-r-a-rb>0 ? player.positionY-r-a-rb : player.positionY;
 	}
 	else{
-		x = x+r+a+rb>0 ? x+r+a+rb : x;
+		player.positionX = player.positionX+r+a+rb>0 ? player.positionX+r+a+rb : player.positionX;
 	}
 
-	LCD_DrawFullCircle(x, y, rb);
+	LCD_DrawFullCircle(player.positionX, player.positionY, rb);
 	
-	bullet.position.positionX = x;
-	bullet.position.positionY = y;
+	bullet.position.positionX = player.positionX;
+	bullet.position.positionY = player.positionY;
 	bullet.position.direction = player.direction;
 	bullet.life = 5;
 	
@@ -105,28 +107,24 @@ BulletPosition BulletInit(Position player){
 }
 
 void BulletMove(BulletPosition *bullet){			
-	int x = bullet->position.positionX,y = bullet->position.positionY;
 	
 	BulletRemove(*bullet);
 	LCD_SetTextColor(LCD_COLOR_BLACK);
 	
 	if(bullet->position.direction==UP){							
-		y+=yb;																																					
+		bullet->position.positionY +=yb;																																					
 	}
-	else if(bullet->position.direction==RIGHT && x-xb > 0){
-		x-=xb;
+	else if(bullet->position.direction==RIGHT && bullet->position.positionX-xb > 0){
+		bullet->position.positionX -=xb;
 	}
-	else if(bullet->position.direction==DOWN && y-yb > 0){
-		y-=yb;
+	else if(bullet->position.direction==DOWN && bullet->position.positionY-yb > 0){
+		bullet->position.positionY -=yb;
 	}
 	else{
-		x+=xb;										
+		bullet->position.positionX +=xb;										
 	}
 	
-	LCD_DrawFullCircle(x, y, rb);
-	
-	bullet->position.positionX = x;
-	bullet->position.positionY = y;
+	LCD_DrawFullCircle(bullet->position.positionX, bullet->position.positionY, rb);
 }
 
 void BulletRemove(BulletPosition bullet){					
@@ -135,9 +133,6 @@ void BulletRemove(BulletPosition bullet){
 }
 
 void TankMove(Position *player, int choosePlayer){			
-	int x,y;														
-	x = player->positionX;
-	y = player->positionY;
 	
 	TankRemove(*player);
 	if(choosePlayer == 0)
@@ -147,31 +142,28 @@ void TankMove(Position *player, int choosePlayer){
 	
 	if(player->direction==UP){							
 		if(player->positionY+yt <= yScreenEnd && player->positionY+yt >= yScreenStart)	
-			y=player->positionY+yt;																																		
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
+			player->positionY=player->positionY+yt;																																		
+		LCD_DrawFullCircle(player->positionX, player->positionY, r);
+		LCD_FillTriangle(player->positionX+a/2, player->positionX-a/2, player->positionX, player->positionY+r, player->positionY+r, player->positionY+r+a);
 	}
 	else if(player->direction==RIGHT){
 		if(player->positionX-xt <= xScreenEnd && player->positionX-xt >= xScreenStart)
-			x=player->positionX-xt;	
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);
+			player->positionX=player->positionX-xt;	
+		LCD_DrawFullCircle(player->positionX, player->positionY, r);
+		LCD_FillTriangle(player->positionX-r, player->positionX-r, player->positionX-r-a, player->positionY+a/2, player->positionY-a/2, player->positionY);
 	}
 	else if(player->direction==DOWN){
 		if(player->positionY-yt <= yScreenEnd && player->positionY-yt >= yScreenStart)
-			y=player->positionY-yt;
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
+			player->positionY=player->positionY-yt;
+		LCD_DrawFullCircle(player->positionX, player->positionY, r);
+		LCD_FillTriangle(player->positionX-a/2, player->positionX+a/2, player->positionX, player->positionY-r, player->positionY-r, player->positionY-r-a);
 	}
 	else{
 		if(player->positionX+xt <= xScreenEnd && player->positionX+xt >= xScreenStart)
-			x=player->positionX+xt;	
-		LCD_DrawFullCircle(x, y, r);
-		LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
+			player->positionX=player->positionX+xt;	
+		LCD_DrawFullCircle(player->positionX, player->positionY, r);
+		LCD_FillTriangle(player->positionX+r, player->positionX+r, player->positionX+r+a, player->positionY-a/2, player->positionY+a/2, player->positionY);
 	}
-	
-	player->positionX = x;
-	player->positionY = y;
 }
 
 void TankRemove(Position player){			
@@ -191,11 +183,7 @@ void TankRemove(Position player){
 }
 
 void TankRotate(Position *player, int next, int choosePlayer){    
-	int x,y;
-	
-	x=player->positionX;	
-	y=player->positionY;
-	
+
 	TankRemove(*player);
 	if(choosePlayer == 0)
 		LCD_SetTextColor(LCD_COLOR_BLUE);
@@ -204,42 +192,42 @@ void TankRotate(Position *player, int next, int choosePlayer){
 	
 	if(player->direction==UP){
 		if(next==0){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX+r, player->positionX+r, player->positionX+r+a, player->positionY-a/2, player->positionY+a/2, player->positionY);
 		}
 		else if(next==1){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);   
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX-r, player->positionX-r, player->positionX-r-a, player->positionY+a/2, player->positionY-a/2, player->positionY);   
 		}
 	}
 	else if(player->direction==RIGHT){
 		if(next==0){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX+a/2, player->positionX-a/2, player->positionX, player->positionY+r, player->positionY+r, player->positionY+r+a);
 		}
 		else if(next==1){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX-a/2, player->positionX+a/2, player->positionX, player->positionY-r, player->positionY-r, player->positionY-r-a);
 		}
 	}
 	else if(player->direction==DOWN){
 		if(next==0){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x-r,x-r,x-r-a,y+a/2,y-a/2,y);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX-r, player->positionX-r, player->positionX-r-a, player->positionY+a/2, player->positionY-a/2, player->positionY);
 		}
 		else if(next==1){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x+r,x+r,x+r+a,y-a/2,y+a/2,y);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX+r, player->positionX+r, player->positionX+r+a, player->positionY-a/2, player->positionY+a/2, player->positionY);
 		}
 	}
 	else{
 		if(next==0){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x-a/2,x+a/2,x,y-r,y-r,y-r-a);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX-a/2, player->positionX+a/2, player->positionX, player->positionY-r, player->positionY-r, player->positionY-r-a);
 		}
 		else if(next==1){
-			LCD_DrawFullCircle(x, y, r);
-			LCD_FillTriangle(x+a/2,x-a/2,x,y+r,y+r,y+r+a);
+			LCD_DrawFullCircle(player->positionX, player->positionY, r);
+			LCD_FillTriangle(player->positionX+a/2, player->positionX-a/2, player->positionX, player->positionY+r, player->positionY+r, player->positionY+r+a);
 		}
 	}
 	
