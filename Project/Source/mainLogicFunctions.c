@@ -102,7 +102,7 @@ void CheckHit(){
 	
 }
 
-void CheckEndGameCondition(){
+void CheckEndGameCondition(int *gameRunning){
 	
 }
 

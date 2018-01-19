@@ -455,8 +455,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Headers\lcdfunctions.h</PathWithFileName>
-      <FilenameWithoutPath>lcdfunctions.h</FilenameWithoutPath>
+      <PathWithFileName>.\Headers\mainLogicFunctions.h</PathWithFileName>
+      <FilenameWithoutPath>mainLogicFunctions.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -467,8 +467,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Headers\mainLogicFunctions.h</PathWithFileName>
-      <FilenameWithoutPath>mainLogicFunctions.h</FilenameWithoutPath>
+      <PathWithFileName>.\Headers\lcdfunctions.h</PathWithFileName>
+      <FilenameWithoutPath>lcdfunctions.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

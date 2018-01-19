@@ -466,14 +466,14 @@
               <FilePath>.\Headers\input.h</FilePath>
             </File>
             <File>
-              <FileName>lcdfunctions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Headers\lcdfunctions.h</FilePath>
-            </File>
-            <File>
               <FileName>mainLogicFunctions.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\mainLogicFunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdfunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\lcdfunctions.h</FilePath>
             </File>
           </Files>
         </Group>
