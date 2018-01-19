@@ -1,6 +1,6 @@
 #include "main.h"
 int main(void){
-	int postojiMetak = 0;
+	int postojiMetak = 0, random1, random2, gameRunning=1;
 	Position player1, player2;
 	Queue queue;
 	
@@ -20,7 +20,7 @@ int main(void){
 	
 	Delay(TICK_RATE);
 	
-  while(gameRunning){
+  while(gameRunning == 1){
 		random1 = rand()%5;
 		random2 = rand()%5;
 		
@@ -28,7 +28,6 @@ int main(void){
 			BulletCycle(&queue);
 		}
 		
-		ReadGyro();
 		ReadFireButton();
 		ReadESP();
 			
@@ -37,7 +36,9 @@ int main(void){
 			
 		WriteESP();
 
-		CheckEndGameCondition();
+		CheckEndGameCondition(&gameRunning);
+		
+		Delay(TICK_RATE);
 	}
 	
 	EndGame();
