@@ -13,8 +13,8 @@
 /*User Includes ------------------------------------------------------------------*/
 #include "lcdfunctions.h"
 #include "bulletQueueFunctions.h"
-#include "input.h"
 #include "mainLogicFunctions.h"
-
+#include "input.h"
+#include "gyro.h"
 #endif
 

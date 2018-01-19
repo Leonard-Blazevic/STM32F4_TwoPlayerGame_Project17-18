@@ -134,10 +134,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4100</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -358,7 +358,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -396,9 +396,9 @@
               <FilePath>.\Source\main.c</FilePath>
             </File>
             <File>
-              <FileName>lcdfunctions.c</FileName>
+              <FileName>gyro.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\lcdfunctions.c</FilePath>
+              <FilePath>.\Source\gyro.c</FilePath>
             </File>
             <File>
               <FileName>bulletQueueFunctions.c</FileName>
@@ -406,9 +406,14 @@
               <FilePath>.\Source\bulletQueueFunctions.c</FilePath>
             </File>
             <File>
-              <FileName>input.c</FileName>
+              <FileName>lcdfunctions.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\input.c</FilePath>
+              <FilePath>.\Source\lcdfunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>mainLogicFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\mainLogicFunctions.c</FilePath>
             </File>
             <File>
               <FileName>mainLogicFunctions.c</FileName>
@@ -435,6 +440,11 @@
               <FileType>1</FileType>
               <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_sdram.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f429i_discovery_l3gd20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_l3gd20.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -446,9 +456,9 @@
               <FilePath>.\Headers\main.h</FilePath>
             </File>
             <File>
-              <FileName>lcdfunctions.h</FileName>
+              <FileName>gyro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Headers\lcdfunctions.h</FilePath>
+              <FilePath>.\Headers\gyro.h</FilePath>
             </File>
             <File>
               <FileName>bulletQueueFunctions.h</FileName>
@@ -459,6 +469,16 @@
               <FileName>input.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\input.h</FilePath>
+            </File>
+            <File>
+              <FileName>mainLogicFunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\mainLogicFunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdfunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\lcdfunctions.h</FilePath>
             </File>
             <File>
               <FileName>mainLogicFunctions.h</FileName>
@@ -476,16 +496,6 @@
               <FilePath>.\Source\system_stm32f4xx.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_fmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fmc.c</FilePath>
-            </File>
-            <File>
-              <FileName>misc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
@@ -496,29 +506,14 @@
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_rcc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_ltdc.c</FileName>
+              <FileName>misc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_ltdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_dma2d.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma2d.c</FilePath>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_syscfg.c</FileName>
@@ -526,9 +521,34 @@
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f4xx_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_dma2d.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma2d.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_fmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ltdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_ltdc.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,7 +1,5 @@
 #include "main.h"
-
 int main(void){
-	int random1, random2, gameRunning = 0;
 	int postojiMetak = 0;
 	Position player1, player2;
 	Queue queue;
@@ -46,4 +44,3 @@ int main(void){
 	
 	while(1);
 }
-
