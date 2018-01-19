@@ -401,9 +401,19 @@
               <FilePath>.\Source\gyro.c</FilePath>
             </File>
             <File>
-              <FileName>test.c</FileName>
+              <FileName>bulletQueueFunctions.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\test.c</FilePath>
+              <FilePath>.\Source\bulletQueueFunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcdfunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\lcdfunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>mainLogicFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\mainLogicFunctions.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -434,6 +444,26 @@
               <FileName>gyro.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\gyro.h</FilePath>
+            </File>
+            <File>
+              <FileName>bulletQueueFunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\bulletQueueFunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\input.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdfunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\lcdfunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>mainLogicFunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\mainLogicFunctions.h</FilePath>
             </File>
           </Files>
         </Group>

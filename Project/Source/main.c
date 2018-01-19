@@ -8,7 +8,7 @@ int main(void)
 {
 	int random1, random2, i;
 	int postojiMetak = 0;
-	PlayerPosition player1, player2;
+	Position player1, player2;
 	Queue queue;
 	BulletPosition temp;
 	
