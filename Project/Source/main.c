@@ -1,10 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 
-void Delay(void);
-
 int main(void)
-
 {
 	int random1, random2, i;
 	int postojiMetak = 0;
@@ -17,14 +14,14 @@ int main(void)
 	
 	StartScreen();
 	
-	Delay();
+	Delay(TICK_RATE);
 	
 	ClearScreen();
 	
 	player1 = TankInit(0);
 	player2 = TankInit(1);
 	
-	Delay();
+	Delay(TICK_RATE);
 	
   while (1){
 		random1 = rand()%5;
@@ -89,13 +86,7 @@ int main(void)
 				break;
 		}
 		
-		Delay();
+		Delay(TICK_RATE);
 	}
 }
-
-void Delay() {
-	int i;
-	for(i=0;i<5000000;i++);
-}
-
 
