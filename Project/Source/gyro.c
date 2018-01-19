@@ -77,7 +77,7 @@ direction GetDirection ()
 			return RIGHT;
 		}
 		else {
-			return NoChange;
+			return NOCHANGE;
 		}
 	}
 }

@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F429_439xx,USE_STM32F429I_DISCO,</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Headers;.\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;.\..\Libraries\CMSIS\Include;.\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;.\..\Utilities\STM32F429I-Discovery</IncludePath>
+              <IncludePath>.\Headers;..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\Utilities\STM32F429I-Discovery</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -426,6 +426,16 @@
               <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f429i_discovery_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f429i_discovery_sdram.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_sdram.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f429i_discovery_l3gd20.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_l3gd20.c</FilePath>
@@ -479,6 +489,8 @@
               <FileName>stm32f4xx_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f4xx_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
@@ -514,24 +526,19 @@
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_dma2d.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma2d.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_syscfg.c</FileName>
+              <FileName>stm32f4xx_fmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fmc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_spi.c</FileName>
+              <FileName>stm32f4xx_ltdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_ltdc.c</FilePath>
             </File>
           </Files>
         </Group>

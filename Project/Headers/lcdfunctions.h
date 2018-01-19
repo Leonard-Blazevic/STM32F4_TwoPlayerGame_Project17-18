@@ -17,6 +17,7 @@ typedef enum{
 	RIGHT = 2,
 	DOWN = 3,
 	LEFT = 4,
+	NOCHANGE = 0,
 }direction;
 
 

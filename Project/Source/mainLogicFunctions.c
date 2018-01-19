@@ -3,9 +3,10 @@
 static __IO uint32_t TimingDelay;
 
 void Delay(__IO uint32_t nTime){ 
-  TimingDelay = nTime;
-
-  while(TimingDelay != 0);
+  /*TimingDelay = nTime;
+  while(TimingDelay != 0);*/
+	
+	while(nTime != 0) nTime--;
 }
 
 void TimingDelay_Decrement(void){
@@ -86,9 +87,6 @@ void TankCycle(int random1, int random2, Position *player1, Position *player2, Q
 }
 
 void ReadFireButton(){
-}
-
-void ReadGyro(){
 	
 }
 
