@@ -6,12 +6,8 @@ int main(void){
 	
 	queue.end = -1; 
 	queue.top = -1;
-	
-	if (SysTick_Config(SystemCoreClock / 1000))
-  { 
-		//handle errors
-    while (1);
-  }
+
+	GyroInit(); 
 	
 	StartGame();
 	
@@ -20,7 +16,7 @@ int main(void){
 	
 	Delay(TICK_RATE);
 	
-  while(gameRunning == 1){
+  while(gameRunning){
 		random1 = rand()%5;
 		random2 = rand()%5;
 		
@@ -31,14 +27,13 @@ int main(void){
 		ReadFireButton();
 		ReadESP();
 			
-		BulletCycle(&queue);
 		TankCycle(random1, random2, &player1, &player2, &queue, &postojiMetak);
 			
 		WriteESP();
 
 		CheckEndGameCondition(&gameRunning);
 		
-		Delay(TICK_RATE);
+		Delay(10000); //ako mislis da je presporo ili prebrzo promijeni vrijeme cekanja
 	}
 	
 	EndGame();

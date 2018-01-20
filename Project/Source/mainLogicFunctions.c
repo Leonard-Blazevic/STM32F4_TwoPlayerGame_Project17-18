@@ -31,16 +31,16 @@ void BulletCycle(Queue *queue){
 			BulletMove(&queue->field[i]);
 			queue->field[i].life--;
 		}
-		else{
-			for (i=0; i <= queue->end; i++){
-				BulletMove(&queue->field[i]);
-				queue->field[i].life--;
-			}
-			for (i=queue->top + 1; i < numberOfAllowedBullets; i++){
-				BulletMove(&queue->field[i]);
-				queue->field[i].life--;
-			}
+	else{
+		for (i=0; i <= queue->end; i++){
+			BulletMove(&queue->field[i]);
+			queue->field[i].life--;
 		}
+		for (i=queue->top + 1; i < numberOfAllowedBullets; i++){
+			BulletMove(&queue->field[i]);
+			queue->field[i].life--;
+		}
+	}
 			
 	if (queue->field[(queue->top + 1)%numberOfAllowedBullets].life < 0){
 		Remove(&temp, queue);
@@ -49,14 +49,15 @@ void BulletCycle(Queue *queue){
 }
 
 void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue, int *postojiMetak){
-	switch(random1){
+	int movement;
+	/*switch(random1){
 			case 0:
 			case 1:
 			case 2:
 				TankMove(player1, 0);
 				break;
 			case 3:
-				if (postojiMetak == 0){
+				if (*postojiMetak == 0){
 					initQueue(queue);
 					*postojiMetak = 1;
 				}
@@ -64,6 +65,28 @@ void TankCycle(int random1, int random2, Position *player1, Position *player2, Q
 				break;
 			case 4:
 				TankRotate(player1, rand()%2, 0);
+				break;
+		}*/
+	
+	//probajte napravit da ovo proradi, trenutno, bar na mom stm-u, 
+	//ziroskop uvijek ocitava istu vrijednost cak i kad je na stolu i ne mice se
+	
+	movement = GetDirection(); 
+	
+	switch(movement){
+			case UP:
+				TankMove(player1, 0);
+				break;
+			case DOWN:
+				//Treba li nam uopce smjer down?
+				break;
+			case LEFT:
+				TankRotate(player1, 0, 0);
+				break;
+			case RIGHT:
+				TankRotate(player1, 1, 0);
+				break;
+			case NOCHANGE:
 				break;
 		}
 		
@@ -74,7 +97,7 @@ void TankCycle(int random1, int random2, Position *player1, Position *player2, Q
 				TankMove(player2, 1);
 				break;
 			case 3:
-				if (postojiMetak == 0){
+				if (*postojiMetak == 0){
 					initQueue(queue);
 					*postojiMetak = 1;
 				}

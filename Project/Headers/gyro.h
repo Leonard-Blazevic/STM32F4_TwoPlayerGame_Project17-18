@@ -28,7 +28,7 @@
 
 
 void GyroInit(void);
-direction GetDirection(void);
+Direction GetDirection(void);
 void GpioLEDInit(void);
 void ReadAngRate (float* GyroData);
 void LEDTest (uint8_t test_dir);

@@ -18,7 +18,7 @@ typedef enum{
 	DOWN = 3,
 	LEFT = 4,
 	NOCHANGE = 0,
-}direction;
+}Direction;
 
 
 void StartScreen(void);
