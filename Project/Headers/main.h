@@ -16,5 +16,6 @@
 #include "mainLogicFunctions.h"
 #include "input.h"
 #include "gyro.h"
+#include "wirelessSerialCommunication.h"
 #endif
 

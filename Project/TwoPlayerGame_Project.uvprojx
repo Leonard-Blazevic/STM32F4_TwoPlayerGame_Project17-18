@@ -415,6 +415,11 @@
               <FileType>1</FileType>
               <FilePath>.\Source\mainLogicFunctions.c</FilePath>
             </File>
+            <File>
+              <FileName>wirelessSerialCommunication.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\wirelessSerialCommunication.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -474,6 +479,11 @@
               <FileName>lcdfunctions.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Headers\lcdfunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>wirelessSerialCommunication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Headers\wirelessSerialCommunication.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -539,6 +549,11 @@
               <FileName>stm32f4xx_ltdc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_ltdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
           </Files>
         </Group>
