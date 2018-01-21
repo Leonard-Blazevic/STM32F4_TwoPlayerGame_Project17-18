@@ -9,7 +9,7 @@
 
 #define BUFSIZE       16 
 #define BAUDRATE      115200      //DON'T CHANGE - default baudrate for ESP
-#define STOPSIGN      'a'         //ESP will read from serial interface until it reaches STOPSIGN - STOPSIGN WON'T BE READ!
+#define STOPSIGN      '}'         //ESP will read from serial interface until it reaches STOPSIGN - STOPSIGN WON'T BE READ!
 
 void Usart1GpioInit(void);
 void SendData(Struct struct1);

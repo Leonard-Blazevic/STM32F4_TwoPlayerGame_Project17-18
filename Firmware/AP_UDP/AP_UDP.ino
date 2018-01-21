@@ -3,7 +3,7 @@
 #define NAME "ESP_01_AP"
 #define PASSWORD "test12586"
 #define PACKET_SIZE 100
-#define STOP_SIGN '\n'
+#define STOP_SIGN '}'
 
 IPAddress staticIP(192,168,1,15);        //IP configuration for AP
 IPAddress gateway(192,168,1,22);
