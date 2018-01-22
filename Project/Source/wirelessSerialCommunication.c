@@ -17,7 +17,7 @@ static uint8_t TxReady;
 
 
 /*Private functions-----------------------------------------------------------*/
-static void WriteByteToSerial(char c)
+ void WriteByteToSerial(char c)
 {
 	while(!TxReady);
 	USART_SendData(USART1, c);
@@ -26,7 +26,7 @@ static void WriteByteToSerial(char c)
 
 static char PopReceiveBuffer(void)
 {
-	char c=STOPSIGN;
+	char c='x';
 	
 	NVIC_DisableIRQ(USART1_IRQn);
 	
@@ -57,7 +57,7 @@ void Usart1GpioInit(void)
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	
 	//setting GPIO pins
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;  //Pin PA9 (USART1_TX), pin PA10 (USART_1RX)
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;  //Pin PA9 (USART1_TX), pin PA10 (USART1_RX)
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
@@ -115,12 +115,11 @@ WifiPackage ReadData(void)
 	
 	struct1.readFlag = FALSE;
 	
-	struct1.sync = (int) PopReceiveBuffer();
-	struct1.movement = (int) PopReceiveBuffer();
-	struct1.hasFired = (int) PopReceiveBuffer();
+	while((struct1.sync = (int) PopReceiveBuffer()) == 'x');
+	while((struct1.movement = (int) PopReceiveBuffer()) == 'x');
+	while((struct1.hasFired = (int) PopReceiveBuffer()) == 'x');
 	
-	if((struct1.sync != (int) STOPSIGN) && (struct1.movement != (int) STOPSIGN) && (struct1.hasFired != (int) STOPSIGN))
-		struct1.readFlag = TRUE;
+	struct1.readFlag = TRUE;
 	
 	
 	return struct1;
@@ -131,7 +130,7 @@ WifiPackage ReadData(void)
 /*Interrupt functions------------------------------------------------------------*/
 void USART1_IRQHandler(void)
 {
-	char rxChar; 
+	static char rxChar; 
 	static char rxIrqTail;
 	
 	//rx event

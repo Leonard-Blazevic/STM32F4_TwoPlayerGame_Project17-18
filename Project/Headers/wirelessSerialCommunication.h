@@ -30,6 +30,7 @@ typedef struct {
 void Usart1GpioInit(void);
 void SendData(WifiPackage struct1);
 WifiPackage ReadData(void);
+void WriteByteToSerial(char c);
 
 
 #endif

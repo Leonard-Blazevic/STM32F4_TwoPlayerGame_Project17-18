@@ -3,13 +3,31 @@
 int main(void){
 	
 	
-	WifiPackage s2;
+	WifiPackage s2, s1;
+	
+	Usart1GpioInit();
+	StartScreen();
+	ClearScreen();
+	
+	s1.sync = 97;
+	s1.movement = 48;
+	s1.hasFired = 50;
+	s1.readFlag = FALSE;
+	SendData(s1);
+	Write("Test", 4);
 	
 	while(1)
 	{
-		//s2 = ReadData();
-		if((s2=ReadData()).readFlag == TRUE)
-			SendData(s2);
+		
+		SendData(s1);
+		Delay(100000000);
+		s2=ReadData();
+		if(s2.readFlag == TRUE)
+    {
+			Write("Primljen podatak!", (s2.hasFired-48));
+			Write("Usao u if", 5);
+		}
+
 		
 	}
 	

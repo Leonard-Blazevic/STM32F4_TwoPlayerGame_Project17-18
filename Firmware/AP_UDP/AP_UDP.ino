@@ -22,33 +22,22 @@ void setup() {
   WiFi.mode(WIFI_AP);
   
   Serial.begin(115200);                  //starting serial communication, baudrate 115200 (ESP default)
-
+  boolean result, configChange;
+  
   while(1){                                              //setting AP
-    boolean result = WiFi.softAP(NAME, PASSWORD);
+    result = WiFi.softAP(NAME, PASSWORD);
     if(result)
     {
-      boolean configChange = WiFi.softAPConfig(staticIP, gateway, subnet);
+      configChange = WiFi.softAPConfig(staticIP, gateway, subnet);
       if(configChange){
         break;
       }
     }
-    else
-    {
-      Serial.println("AP not created! Trying again...");
-      delay(2000);
-    }
   }
-
-  Serial.println("Waiting for player 2 to join...");
   
-  while(WiFi.softAPgetStationNum() != 1)         //waiting for station (client) to connect
-  {
-    Serial.print(".");
-    delay(500);
-  }
-
-  Serial.println("Player has joined the game!");
-
+  while(WiFi.softAPgetStationNum() != 1);         //waiting for station (client) to connect
+  Serial.println("Client connected");
+  
   Udp.begin(localUdpPort);
 
 }
