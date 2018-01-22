@@ -5,8 +5,7 @@
 //	Initialize using Usart1GpioInit() function.
 //
 //	Reads and writes 4 integers from struct
-//  defined in <file name> to/from serial interface (UART)
-//  !ENTER STRUCT TYPDEFS: CTRL+F AND replace Struct with <struct typedef>!
+//  defined in header file to/from serial interface (UART)
 /*----------------------------------------------------------------------------*/
 #include "main.h"
 
