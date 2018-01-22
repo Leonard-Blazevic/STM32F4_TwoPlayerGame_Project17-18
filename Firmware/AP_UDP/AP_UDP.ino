@@ -34,21 +34,14 @@ void setup() {
     }
     else
     {
-      Serial.println("AP not created! Trying again...");
-      delay(2000);
+      delay(500);
     }
   }
 
-  Serial.println("Waiting for player 2 to join...");
-  
   while(WiFi.softAPgetStationNum() != 1)         //waiting for station (client) to connect
   {
-    Serial.print(".");
     delay(500);
   }
-
-  Serial.println("Player has joined the game!");
-
   Udp.begin(localUdpPort);
 
 }

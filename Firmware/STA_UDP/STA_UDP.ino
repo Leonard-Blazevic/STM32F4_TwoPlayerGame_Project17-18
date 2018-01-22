@@ -23,16 +23,10 @@ void setup() {
   
   Serial.begin(115200);
 
-  Serial.println("Joining game...");
   WiFi.begin(NAME, PASSWORD);
   boolean configChange = WiFi.config(staticIP, gateway, subnet);
-  while (WiFi.status() != WL_CONNECTED && !configChange)
-  {
-    delay(500);
-    Serial.println(".");
-  }
-  Serial.println("Joined game!");
-
+  while (WiFi.status() != WL_CONNECTED && !configChange);
+  
   Udp.begin(localUdpPort);
 
 }
