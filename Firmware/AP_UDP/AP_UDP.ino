@@ -33,11 +33,24 @@ void setup() {
         break;
       }
     }
+<<<<<<< HEAD
   }
   
   while(WiFi.softAPgetStationNum() != 1);         //waiting for station (client) to connect
   Serial.println("Client connected");
   
+=======
+    else
+    {
+      delay(500);
+    }
+  }
+
+  while(WiFi.softAPgetStationNum() != 1)         //waiting for station (client) to connect
+  {
+    delay(500);
+  }
+>>>>>>> 1b2c4d2cd589faf60ca73c69c7edf621c0dbac09
   Udp.begin(localUdpPort);
 
 }

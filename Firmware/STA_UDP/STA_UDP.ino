@@ -26,7 +26,11 @@ void setup() {
   WiFi.begin(NAME, PASSWORD);
   boolean configChange = WiFi.config(staticIP, gateway, subnet);
   while (WiFi.status() != WL_CONNECTED && !configChange);
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 1b2c4d2cd589faf60ca73c69c7edf621c0dbac09
   Udp.begin(localUdpPort);
 
 }
