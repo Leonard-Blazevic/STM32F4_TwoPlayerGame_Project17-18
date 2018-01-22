@@ -1,5 +1,7 @@
 #include "main.h"
+
 int main(void){
+	
 	int postojiMetak = 0, random1, random2, gameRunning=1;
 	Position player1, player2;
 	Queue queue;
