@@ -1,6 +1,8 @@
 #ifndef __LCDFUNCTIONS_H
 #define __LCDFUNCTIONS_H
 
+#include <math.h>
+
 typedef struct {
   int positionX;
 	int positionY;
@@ -26,7 +28,7 @@ void EndScreen(int pobjednik);
 Position TankInit(int choosePlayer);
 BulletPosition BulletInit(Position player);
 void BulletMove(BulletPosition *bullet);
-void TankMove(Position *player1, int choosePlayer);
+void TankMove(Position *player1, Position *player2, int choosePlayer);
 void TankRemove(Position player);
 void BulletRemove(BulletPosition bullet);
 void TankRotate(Position *player1, int next, int choosePlayer);

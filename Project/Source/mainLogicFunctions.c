@@ -23,90 +23,78 @@ void StartGame(){
 }
 
 void BulletCycle(Queue *queue){
-	int i;
 	BulletPosition temp;
+	Atom *top;
+	top = queue->top;
 	
-	if (queue->end >= queue->top)
-		for (i=queue->top + 1; i <= queue->end; i++){
-			BulletMove(&queue->field[i]);
-			queue->field[i].life--;
-		}
-	else{
-		for (i=0; i <= queue->end; i++){
-			BulletMove(&queue->field[i]);
-			queue->field[i].life--;
-		}
-		for (i=queue->top + 1; i < numberOfAllowedBullets; i++){
-			BulletMove(&queue->field[i]);
-			queue->field[i].life--;
-		}
+	while(top){
+		BulletMove(&top->element);
+		top->element.life--;
+		top = top->next;
 	}
 			
-	if (queue->field[(queue->top + 1)%numberOfAllowedBullets].life < 0){
+	if (queue->top->element.life < 0){
 		Remove(&temp, queue);
 		BulletRemove(temp);
 	}
 }
 
-void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue, int *postojiMetak){
-	int movement;
-	/*switch(random1){
+void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
+	BulletPosition temp;
+	//int movement=0;
+	
+	//movement = GetDirection();
+	
+	switch(random1){
 			case 0:
 			case 1:
 			case 2:
-				TankMove(player1, 0);
+				TankMove(player1, player2, 0);
 				break;
 			case 3:
-				if (*postojiMetak == 0){
-					initQueue(queue);
-					*postojiMetak = 1;
-				}
-				Add(BulletInit(*player1), queue);
+				temp = BulletInit(*player1);
+				if(temp.life > 0)
+					Add (temp, queue1);
 				break;
 			case 4:
 				TankRotate(player1, rand()%2, 0);
 				break;
-		}*/
+		}
 	
-	//probajte napravit da ovo proradi, trenutno, bar na mom stm-u, 
-	//ziroskop uvijek ocitava istu vrijednost cak i kad je na stolu i ne mice se
-	
-	movement = GetDirection(); 
-	
-	switch(movement){
-			case UP:
-				TankMove(player1, 0);
+	/*switch(movement){
+			case 0:
 				break;
-			case DOWN:
-				//Treba li nam uopce smjer down?
+			case 1:
+				TankMove(player1, player2, 0);
 				break;
-			case LEFT:
+			case 2:
 				TankRotate(player1, 0, 0);
 				break;
-			case RIGHT:
+			case 3:
 				TankRotate(player1, 1, 0);
 				break;
-			case NOCHANGE:
+			case 4:
 				break;
-		}
-		
+		}*/
+	
+		//TankMove(player1, player2, 0);
+
 		switch(random2){
 			case 0:
 			case 1:
 			case 2:
-				TankMove(player2, 1);
+				TankMove(player2, player1, 1);
 				break;
 			case 3:
-				if (*postojiMetak == 0){
-					initQueue(queue);
-					*postojiMetak = 1;
-				}
-				Add (BulletInit(*player2), queue);
+				temp = BulletInit(*player2);
+				if(temp.life > 0)
+					Add (temp, queue2);
 				break;
 			case 4:
 				TankRotate(player2, rand()%2, 1);
 				break;
 		}
+		
 }
 
 void ReadFireButton(){

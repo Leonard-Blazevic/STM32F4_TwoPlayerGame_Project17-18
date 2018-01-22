@@ -1,13 +1,13 @@
 #include "main.h"
 int main(void){
-	int postojiMetak = 0, random1, random2, gameRunning=1;
+	int random1, random2, gameRunning=1;
 	Position player1, player2;
-	Queue queue;
+	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	
-	queue.end = -1; 
-	queue.top = -1;
-
-	GyroInit(); 
+	initQueue(&bulletQueuePlayer1);
+	initQueue(&bulletQueuePlayer2);
+	
+	srand(21);
 	
 	StartGame();
 	
@@ -16,24 +16,34 @@ int main(void){
 	
 	Delay(TICK_RATE);
 	
+	GyroInit(); 
+	
   while(gameRunning){
 		random1 = rand()%5;
 		random2 = rand()%5;
 		
-		if (queue.end > -1 && queue.top > -1){
-			BulletCycle(&queue);
-		}
-		
+		BulletCycle(&bulletQueuePlayer1);
+		BulletCycle(&bulletQueuePlayer2);
+
 		ReadFireButton();
 		ReadESP();
 			
-		TankCycle(random1, random2, &player1, &player2, &queue, &postojiMetak);
+		TankCycle(random1, random2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
 			
 		WriteESP();
 
 		CheckEndGameCondition(&gameRunning);
 		
-		Delay(10000); //ako mislis da je presporo ili prebrzo promijeni vrijeme cekanja
+		score(1, 0);
+		
+		GyroInit(); 
+		
+		random1 = GetDirection();
+		
+		//TankCycle(random1, random2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
+		
+		Delay(TICK_RATE);
+		
 	}
 	
 	EndGame();
