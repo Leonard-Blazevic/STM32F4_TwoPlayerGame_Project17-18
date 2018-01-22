@@ -17,7 +17,7 @@ int main(void){
 	
 	StartGame();
 	
-	player1 =fdfd TankInit(0);
+	player1 = TankInit(0);
 	player2 = TankInit(1);
 	
 	Delay(TICK_RATE);
