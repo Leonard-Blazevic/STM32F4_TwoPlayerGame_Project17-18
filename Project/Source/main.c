@@ -2,7 +2,18 @@
 
 int main(void){
 	
-	int postojiMetak = 0, random1, random2, gameRunning=1;
+	
+	WifiPackage s2;
+	
+	while(1)
+	{
+		//s2 = ReadData();
+		if((s2=ReadData()).readFlag == TRUE)
+			SendData(s2);
+		
+	}
+	
+	/*int postojiMetak = 0, random1, random2, gameRunning=1;
 	Position player1, player2;
 	Queue queue;
 	
@@ -45,5 +56,5 @@ int main(void){
 	
 	EndGame();
 	
-	while(1);
+	while(1);*/
 }

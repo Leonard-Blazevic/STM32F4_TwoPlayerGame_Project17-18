@@ -98,28 +98,31 @@ void Usart1GpioInit(void)
  
 }
 
-void SendData(Struct struct1)  
+void SendData(WifiPackage struct1)  
 {
 	
-	WriteByteToSerial((char)struct1.Data1);
+	WriteByteToSerial((char)struct1.sync);
 	WriteByteToSerial(STOPSIGN);
-	WriteByteToSerial((char)struct1.Data2);
+	WriteByteToSerial((char)struct1.movement);
 	WriteByteToSerial(STOPSIGN);
-	WriteByteToSerial((char)struct1.Data3);
-	WriteByteToSerial(STOPSIGN);
-	WriteByteToSerial((char)struct1.Data4);
+	WriteByteToSerial((char)struct1.hasFired);
 	WriteByteToSerial(STOPSIGN);
    
 }
 
-Struct ReadData(void)
+WifiPackage ReadData(void)
 {
-	Struct struct1;
+	WifiPackage struct1;
 	
-	struct1.Data1 = (int) PopReceiveBuffer();
-	struct1.Data2 = (int) PopReceiveBuffer();
-	struct1.Data3 = (int) PopReceiveBuffer();
-	struct1.Data4 = (int) PopReceiveBuffer();
+	struct1.readFlag = FALSE;
+	
+	struct1.sync = (int) PopReceiveBuffer();
+	struct1.movement = (int) PopReceiveBuffer();
+	struct1.hasFired = (int) PopReceiveBuffer();
+	
+	if((struct1.sync != (int) STOPSIGN) && (struct1.movement != (int) STOPSIGN) && (struct1.hasFired != (int) STOPSIGN))
+		struct1.readFlag = TRUE;
+	
 	
 	return struct1;
 }

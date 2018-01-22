@@ -11,9 +11,25 @@
 #define BAUDRATE      115200      //DON'T CHANGE - default baudrate for ESP
 #define STOPSIGN      '}'         //ESP will read from serial interface until it reaches STOPSIGN - STOPSIGN WON'T BE READ!
 
+typedef enum{
+	
+	TRUE = 1,
+	FALSE = 0,
+	
+} Boolean;
+
+typedef struct {
+	
+	int sync;
+	int movement;
+	int hasFired;
+	int readFlag;
+	
+} WifiPackage;
+
 void Usart1GpioInit(void);
-void SendData(Struct struct1);
-Struct ReadData(void);
+void SendData(WifiPackage struct1);
+WifiPackage ReadData(void);
 
 
 #endif
