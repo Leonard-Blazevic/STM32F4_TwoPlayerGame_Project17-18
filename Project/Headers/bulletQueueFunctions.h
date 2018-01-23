@@ -1,12 +1,16 @@
 #ifndef __BULLETQUEUEFUNCTIONS_H
 #define _BULLETQUEUEFUNCTIONS_H
 
-#define numberOfAllowedBullets 30
+struct at {
+	BulletPosition element;
+	struct at *next;
+};
+typedef struct at Atom;
 
 typedef struct {
-	BulletPosition field[numberOfAllowedBullets];
-	int end, top;																					//end -> ulaz, top -> izlaz
+	Atom *end, *top;
 } Queue;
+
 
 int Remove (BulletPosition *element, Queue *queue);
 int Add (BulletPosition element, Queue *queue);
