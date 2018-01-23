@@ -111,45 +111,93 @@ BulletPosition BulletInit(Position player){
 	return bullet;
 }
 
-void BulletMove(BulletPosition *bullet){			
-	BulletRemove(*bullet);
+int BulletMove(BulletPosition *bullet, Position player, Position opponent){			
+	BulletRemove(*bullet, player, opponent);
 	LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-	if(bullet->position.direction==UP){
-		if(bullet->position.positionY+yb < yScreenEnd){							
-			bullet->position.positionY +=yb;																																					
-		}
-		else
-			BulletRemove(*bullet);
-	}
-	else if(bullet->position.direction==RIGHT){
-		if(bullet->position.positionX-xb > xScreenStart){
-			bullet->position.positionX -=xb;
-		}
-		else
-			BulletRemove(*bullet);
-	}
-	else if(bullet->position.direction==DOWN){
-		if(bullet->position.positionY-yb > yScreenStart){
-			bullet->position.positionY -=yb;
-		}
-		else
-			BulletRemove(*bullet);
-	}
-	else if(bullet->position.direction==LEFT){
-		if(bullet->position.positionX+xb < xScreenEnd){
-			bullet->position.positionX +=xb;										
-		}
-		else
-			BulletRemove(*bullet);
+	switch(bullet->position.direction){
+		case UP:
+			if(bullet->position.positionY+yb < yScreenEnd){
+				if(bullet->position.positionY < opponent.positionY && bullet->position.positionY+yb >= opponent.positionY-r && bullet->position.positionX == opponent.positionX){
+					BulletRemove(*bullet, player, opponent);
+					return 1;//ako je igrac pogoden
+				}
+				else{
+					bullet->position.positionY +=yb;
+					//ako nije pogoden i metak je unutar okvira
+				}
+			}
+			else{
+				BulletRemove(*bullet, player, opponent);
+				return 0;//ako nije pogoden ali metak nije unutar okvira
+			}
+			break;
+			
+		case RIGHT:
+			if(bullet->position.positionX-xb > xScreenStart){
+				if(bullet->position.positionX > opponent.positionX && bullet->position.positionX-xb <= opponent.positionX+r && bullet->position.positionY == opponent.positionY){
+					BulletRemove(*bullet, player, opponent);
+					return 1;//ako je igrac pogoden
+				}
+				else{
+					bullet->position.positionX -=xb;
+					//ako nije pogoden i metak je unutar okvira
+				}
+			}
+			else{
+				BulletRemove(*bullet, player, opponent);
+				return 0;//ako nije pogoden ali metak nije unutar okvira
+			}
+			break;
+			
+		case DOWN:
+			if(bullet->position.positionY-yb > yScreenStart){
+				if(bullet->position.positionY > opponent.positionY && bullet->position.positionY-yb <= opponent.positionY+r && bullet->position.positionX == opponent.positionX){
+					BulletRemove(*bullet, player, opponent);
+					return 1;//ako je igrac pogoden
+				}
+				else{
+					bullet->position.positionY -=yb;
+					//ako nije pogoden i metak je unutar okvira
+				}
+			}
+			else{
+				BulletRemove(*bullet, player, opponent);
+				return 0;//ako nije pogoden ali metak nije unutar okvira
+			}
+			break;
+			
+		case LEFT:
+			if(bullet->position.positionX+xb < xScreenEnd){
+				if(bullet->position.positionX < opponent.positionX && bullet->position.positionX+xb >= opponent.positionX-r && bullet->position.positionY == opponent.positionY){
+					BulletRemove(*bullet, player, opponent);
+					return 1;//ako je igrac pogoden	
+				}
+				else{
+					bullet->position.positionX +=xb;
+					//ako nije pogoden i metak je unutar okvira		
+				}		
+			}
+			else{
+				BulletRemove(*bullet, player, opponent);
+				return 0;//ako nije pogoden ali metak nije unutar okvira
+			}
+			break;
 	}
 	
 	LCD_DrawFullCircle(bullet->position.positionX, bullet->position.positionY, rb);
+	return 0;
 }
 
-void BulletRemove(BulletPosition bullet){
+void BulletRemove(BulletPosition bullet, Position player1, Position player2){
 	if(bullet.position.positionX > 5 && bullet.position.positionY > 5){
-		LCD_SetTextColor(LCD_COLOR_WHITE);		
+		if(abs(bullet.position.positionX - player1.positionX) < 10 && abs(bullet.position.positionY - player1.positionY) < 10)
+			LCD_SetTextColor(LCD_COLOR_BLUE);
+		if(abs(bullet.position.positionX - player2.positionX) < 10 && abs(bullet.position.positionY - player2.positionY) < 10)
+			LCD_SetTextColor(LCD_COLOR_RED);
+		else
+			LCD_SetTextColor(LCD_COLOR_WHITE);
+		
 		LCD_DrawFullCircle(bullet.position.positionX, bullet.position.positionY, rb+2);
 	}
 }
@@ -263,6 +311,19 @@ void score(char p1, char p2){
 	LCD_SetFont(&Font12x12);
 	LCD_ClearLine(LINE(1));
   LCD_SetTextColor(LCD_COLOR_BLACK);
-	sprintf(buffer, "P1:%d P2:%d", p1, p2);
+	if(p1<5){
+		if(p2<5){
+			sprintf(buffer, " !P1:%d!    !P2:%d!", p1, p2);
+			LCD_SetTextColor(LCD_COLOR_RED);
+		}
+		else
+			sprintf(buffer, " !P1:%d!      P2:%d", p1, p2);
+	}
+	else{
+		if(p2<5)
+			sprintf(buffer, " P1:%d      !P2:%d!", p1, p2);
+		else
+			sprintf(buffer, " P1:%d        P2:%d", p1, p2);
+	}
   LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
 }

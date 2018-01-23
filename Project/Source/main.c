@@ -1,13 +1,15 @@
 #include "main.h"
 int main(void){
-	int random1, random2, gameRunning=1;
+	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
+	
+	BulletPosition temp;
 	
 	initQueue(&bulletQueuePlayer1);
 	initQueue(&bulletQueuePlayer2);
 	
-	srand(21);
+	srand(13);
 	
 	StartGame();
 	
@@ -22,8 +24,8 @@ int main(void){
 		random1 = rand()%5;
 		random2 = rand()%5;
 		
-		BulletCycle(&bulletQueuePlayer1);
-		BulletCycle(&bulletQueuePlayer2);
+		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
+		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
 
 		ReadFireButton();
 		ReadESP();
@@ -32,21 +34,14 @@ int main(void){
 			
 		WriteESP();
 
-		CheckEndGameCondition(&gameRunning);
+		CheckEndGameCondition(&gameRunning, health1, health2);
 		
-		score(1, 0);
-		
-		GyroInit(); 
-		
-		random1 = GetDirection();
-		
-		//TankCycle(random1, random2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
+		score(health1, health2);
 		
 		Delay(TICK_RATE);
-		
 	}
 	
-	EndGame();
+	EndGame(health1>health2);
 	
 	while(1);
 }

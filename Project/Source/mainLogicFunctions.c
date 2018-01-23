@@ -22,20 +22,24 @@ void StartGame(){
 	ClearScreen();
 }
 
-void BulletCycle(Queue *queue){
+void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhealth){
 	BulletPosition temp;
 	Atom *top;
 	top = queue->top;
 	
 	while(top){
-		BulletMove(&top->element);
+		if(BulletMove(&top->element, player, opponent) == 1){
+			Remove(&temp, queue);
+			(*playerhealth)--;
+		}
+		
 		top->element.life--;
 		top = top->next;
 	}
 			
 	if (queue->top->element.life < 0){
 		Remove(&temp, queue);
-		BulletRemove(temp);
+		BulletRemove(temp, player, opponent);
 	}
 }
 
@@ -113,11 +117,12 @@ void CheckHit(){
 	
 }
 
-void CheckEndGameCondition(int *gameRunning){
-	
+void CheckEndGameCondition(int *gameRunning, int health1, int health2){
+	if(health1 <= 0 || health2 <= 0)
+		(*gameRunning) = 0;
 }
 
-void EndGame(){
+void EndGame(int winner){
 	ClearScreen ();
-	EndScreen(1);
+	EndScreen(winner);
 }
