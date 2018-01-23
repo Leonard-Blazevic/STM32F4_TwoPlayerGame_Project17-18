@@ -2,7 +2,7 @@
 /*----------------------------------------------------------------------------*/
 //	wirelessSerialCommunication.c
 //
-//	Initialize using Usart1GpioInit() function.
+//	Initialize using Usart1GpioInit() function then sync ESP's by calling EspSync()
 //
 //	Reads and writes 4 integers from struct
 //  defined in header file to/from serial interface (UART)
@@ -17,6 +17,23 @@ static uint8_t TxReady;
 
 
 /*Private functions-----------------------------------------------------------*/
+static void InitEspResetPin(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct;
+	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
+	
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_14;   //red LED
+  GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	GPIO_Init(GPIOG, &GPIO_InitStruct);
+	
+	GPIO_SetBits(GPIOG, GPIO_Pin_14);   //set PG_14 high (turned on)
+}
+
  static void WriteByteToSerial(char c)
 {
 	while(!TxReady);
@@ -95,6 +112,24 @@ void Usart1GpioInit(void)
  
  USART_Cmd(USART1, ENABLE);  //enable interrupts
  
+}
+
+void EspSync(void)
+{
+  char c;
+	
+	InitEspResetPin();
+	
+	//reset ESP
+	Delay(5000000);
+	GPIO_ResetBits(GPIOG, GPIO_Pin_14); //set ESP_RST low
+	Delay(5000000);                     //using Delay() to actually see when reset happens
+	GPIO_SetBits(GPIOG, GPIO_Pin_14);   //set ESP_RST high
+  
+	while((c=PopReceiveBuffer()) != CONNECTED);       //wait for sign that station/ap is connected
+	
+	Write("Connected!", 0);
+	
 }
 
 void SendData(WifiPackage struct1)  
