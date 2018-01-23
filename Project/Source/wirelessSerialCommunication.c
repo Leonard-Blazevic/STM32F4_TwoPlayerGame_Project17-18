@@ -17,7 +17,7 @@ static uint8_t TxReady;
 
 
 /*Private functions-----------------------------------------------------------*/
- void WriteByteToSerial(char c)
+ static void WriteByteToSerial(char c)
 {
 	while(!TxReady);
 	USART_SendData(USART1, c);
@@ -26,7 +26,7 @@ static uint8_t TxReady;
 
 static char PopReceiveBuffer(void)
 {
-	char c='x';
+	char c='x';                                   //'x' marks that nothing was read from the bufffer
 	
 	NVIC_DisableIRQ(USART1_IRQn);
 	

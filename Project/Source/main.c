@@ -4,29 +4,35 @@ int main(void){
 	
 	
 	WifiPackage s2, s1;
+	int i;
 	
 	Usart1GpioInit();
 	StartScreen();
 	ClearScreen();
+	Delay(100000000);
 	
 	s1.sync = 97;
-	s1.movement = 48;
-	s1.hasFired = 50;
+	s1.movement = 48; 
 	s1.readFlag = FALSE;
+	s1.hasFired = 15;
 	SendData(s1);
-	Write("Test", 4);
+	Write("Pocetak", 0);
+	while((s2=ReadData()).hasFired != 15);
+	Write("Sinkronizirano", 0);
 	
 	while(1)
 	{
 		
-		SendData(s1);
-		Delay(100000000);
-		s2=ReadData();
-		if(s2.readFlag == TRUE)
-    {
-			Write("Primljen podatak!", (s2.hasFired-48));
-			Write("Usao u if", 5);
+		for(i=0; i<=12; i++)
+		{
+			Delay(50000000);
+			s1.hasFired = i;
+			SendData(s1);
+			Write("Poslano", i);
+			
 		}
+		
+		ClearScreen();
 
 		
 	}
