@@ -1,6 +1,6 @@
 #include "main.h"
 int main(void){
-	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
+	int gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	
@@ -20,17 +20,14 @@ int main(void){
 	
 	GyroInit(); 
 	
-  while(gameRunning){
-		random1 = rand()%5;
-		random2 = rand()%5;
-		
+  while(gameRunning){		
 		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
 		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
 
 		ReadFireButton();
 		ReadESP();
 			
-		TankCycle(random1, random2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
+		TankCycle(&player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
 			
 		WriteESP();
 

@@ -9,7 +9,7 @@
 void Delay(__IO uint32_t nTime);
 void StartGame(void);
 void BulletCycle(Queue *queue, Position plyer, Position opponent, int *playerPoints);
-void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue1, Queue *queue2);
+void TankCycle(Position *player1, Position *player2, Queue *queue1, Queue *queue2);
 void ReadFireButton(void);
 void ReadESP(void);
 void WriteESP(void);

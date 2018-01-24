@@ -43,7 +43,7 @@ void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhe
 	}
 }
 
-void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
+void TankCycle(Position *player1, Position *player2, Queue *queue1, Queue *queue2){
 	BulletPosition temp;
 	int movement=0;
 	
@@ -68,8 +68,12 @@ void TankCycle(int random1, int random2, Position *player1, Position *player2, Q
 		}
 	
 		TankMove(player1, player2, 0);
-	
-
+		
+		/*
+		temp = BulletInit(*player1);
+		if(temp.life > 0)
+			Add(temp, queue1);
+		*/
 }
 
 void ReadFireButton(){
