@@ -2,8 +2,6 @@
 #include <WiFiUdp.h>
 #define NAME "ESP_01_AP"
 #define PASSWORD "test12586"
-#define PACKET_SIZE 100
-#define STOP_SIGN '}'
 
 IPAddress staticIP(192,168,1,15);        //IP configuration for AP
 IPAddress gateway(192,168,1,22);
@@ -14,8 +12,8 @@ unsigned int stationRemotePort = 4210;
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 4281;        //arbitrary values for port and array size
-char receivePacket[PACKET_SIZE];                   
-char  transmitPacket[PACKET_SIZE]; 
+char receivePacket;                   
+char  transmitPacket; 
 
 void setup() {
 
@@ -54,53 +52,32 @@ void loop() {
   int packetSize = Udp.parsePacket();             //receiving incoming UDP packets
   if (packetSize)
   {
-    int len = Udp.read(receivePacket, PACKET_SIZE);
-    if (len > 0)
-    {
-      receivePacket[len] = 0;
-    }
+    receivePacket = Udp.read();
     Serial.print(receivePacket);
-    memset(receivePacket, 0, sizeof(receivePacket));     //resetting receive buffer
     
   }
   
-  if (receiveUntilStopSign() >= 1) 
+  if (ReceiveByte()) 
   {
     Udp.beginPacket(stationStaticIP, stationRemotePort);
     Udp.write(transmitPacket);
     Udp.endPacket();
-    memset(transmitPacket, 0, sizeof(transmitPacket));  //resetting transmit values
    
   }
 
 }
 
-int receiveUntilStopSign(){
-  char receivedByte;
-  int position = 0;
-  int numOfReceivedBytes = 0;
-  
-  while(Serial.available() > 0)
+int ReceiveByte(void){
+  int received=0;
+
+  if(Serial.available() > 0)
   {
-    receivedByte = Serial.read();
-
-    if(receivedByte != STOP_SIGN)
-    {
-     transmitPacket[position++] = receivedByte;
-     numOfReceivedBytes++;
-
-     if(position >= PACKET_SIZE)
-     {
-      position = 0;
-     }
-    }
-    else 
-    {
-      transmitPacket[position] = '\0';
-      return numOfReceivedBytes;
-    }
+    transmitPacket = Serial.read();
+    received = 1;
   }
-  return 0;
+  
+  
+  return received;
   
 }
 

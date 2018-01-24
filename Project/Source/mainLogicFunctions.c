@@ -43,25 +43,34 @@ void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhe
 	}
 }
 
-void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
+void TankCycle(int random1, WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
 	BulletPosition temp;
 	//int movement=0;
+	int rnd=0;
 	
 	//movement = GetDirection();
+	
+	(*package1).movement = 0;
+	(*package1).hasFired = 0;
+	(*package1).sync = 0;
 	
 	switch(random1){
 			case 0:
 			case 1:
 			case 2:
 				TankMove(player1, player2, 0);
+				(*package1).movement = 1;
 				break;
 			case 3:
 				temp = BulletInit(*player1);
 				if(temp.life > 0)
 					Add (temp, queue1);
+				(*package1).hasFired = 1;
 				break;
 			case 4:
-				TankRotate(player1, rand()%2, 0);
+				rnd=rand()%2;
+				TankRotate(player1, rnd, 0);
+				(*package1).movement = rnd+2;
 				break;
 		}
 	
@@ -83,7 +92,7 @@ void TankCycle(int random1, int random2, Position *player1, Position *player2, Q
 	
 		//TankMove(player1, player2, 0);
 
-		switch(random2){
+		/*switch(random2){
 			case 0:
 			case 1:
 			case 2:
@@ -97,8 +106,27 @@ void TankCycle(int random1, int random2, Position *player1, Position *player2, Q
 			case 4:
 				TankRotate(player2, rand()%2, 1);
 				break;
+		}*/
+		
+		switch(package2.movement){
+			case 1:
+				TankMove(player2, player1, 1);
+				break;
+			case 2:
+				TankRotate(player2, 0, 1);
+				break;
+			case 3:
+				TankRotate(player2, 1, 1);
+				break;
+			default:
+				break;
 		}
 		
+		if(package2.hasFired){
+			temp = BulletInit(*player2);
+			if(temp.life > 0)
+				Add (temp, queue2);
+		}
 }
 
 void ReadFireButton(){

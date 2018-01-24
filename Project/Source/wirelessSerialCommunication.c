@@ -117,6 +117,7 @@ void Usart1GpioInit(void)
 void EspSync(void)
 {
   char c;
+	WifiPackage syncPackage, syncReceive;
 	
 	InitEspResetPin();
 	
@@ -125,10 +126,35 @@ void EspSync(void)
 	GPIO_ResetBits(GPIOG, GPIO_Pin_14); //set ESP_RST low
 	Delay(5000000);                     //using Delay() to actually see when reset happens
 	GPIO_SetBits(GPIOG, GPIO_Pin_14);   //set ESP_RST high
-  
-	while((c=PopReceiveBuffer()) != CONNECTED);       //wait for sign that station/ap is connected
+	
+	Write("Connecting...", 0);
+
+	syncPackage.sync = 98;
+
+	
+	while(1)
+  {
+		c=PopReceiveBuffer();
+		if(c==CONNECTED)
+			break;
+	}
 	
 	Write("Connected!", 0);
+	while((c=PopReceiveBuffer()) != 'x');
+	
+#ifdef CLIENT
+	ReadData(&syncReceive);
+	SendData(syncReceive);
+#endif
+	
+#ifndef CLIENT
+	SendData(syncPackage);
+	ReadData(&syncReceive);
+#endif
+
+  if(syncReceive.readFlag == TRUE)
+		Write("Sync done!", 1);
+			
 	
 }
 
@@ -136,28 +162,40 @@ void SendData(WifiPackage struct1)
 {
 	
 	WriteByteToSerial((char)struct1.sync);
-	WriteByteToSerial(STOPSIGN);
 	WriteByteToSerial((char)struct1.movement);
-	WriteByteToSerial(STOPSIGN);
 	WriteByteToSerial((char)struct1.hasFired);
-	WriteByteToSerial(STOPSIGN);
    
 }
 
-WifiPackage ReadData(void)
+void ReadData(WifiPackage *struct1)
 {
-	WifiPackage struct1;
-	
-	struct1.readFlag = FALSE;
-	
-	while((struct1.sync = (int) PopReceiveBuffer()) == 'x');
-	while((struct1.movement = (int) PopReceiveBuffer()) == 'x');
-	while((struct1.hasFired = (int) PopReceiveBuffer()) == 'x');
-	
-	struct1.readFlag = TRUE;
-	
-	
-	return struct1;
+    
+    struct1->readFlag = FALSE;
+    
+    char c;
+    
+    while (1) {
+        c = PopReceiveBuffer();
+        if (c != 'x')
+            break;
+    }
+    struct1->sync = c;
+		
+    while (1) {
+        c = PopReceiveBuffer();
+        if (c != 'x')
+            break;
+    }
+    struct1->movement = c;
+		
+    while (1) {
+        c = PopReceiveBuffer();
+        if (c != 'x')
+            break;
+    }
+    struct1->hasFired = c;
+    
+    struct1->readFlag = TRUE;
 }
 /*----------------------------------------------------------------------------*/
 

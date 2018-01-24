@@ -9,7 +9,6 @@
 
 #define BUFSIZE        16 
 #define BAUDRATE       115200      //DON'T CHANGE - default baudrate for ESP
-#define STOPSIGN       '}'         //ESP will read from serial interface until it reaches STOPSIGN - STOPSIGN WON'T BE READ!
 #define CONNECTED      '2'
 
 typedef enum{
@@ -28,10 +27,12 @@ typedef struct {
 	
 } WifiPackage;
 
+
 void Usart1GpioInit(void);
 void EspSync(void);
 void SendData(WifiPackage struct1);
-WifiPackage ReadData(void);
-
+void ReadData(WifiPackage *struct1);
+void SendDataSimple(char a);
+void ReadDataSimple(char *a) ;
 
 #endif
