@@ -1,6 +1,8 @@
 #ifndef __LCDFUNCTIONS_H
 #define __LCDFUNCTIONS_H
 
+#include <math.h>
+
 typedef struct {
   int positionX;
 	int positionY;
@@ -18,17 +20,17 @@ typedef enum{
 	DOWN = 3,
 	LEFT = 4,
 	NOCHANGE = 0,
-}direction;
+}Direction;
 
 
 void StartScreen(void);
 void EndScreen(int pobjednik);
 Position TankInit(int choosePlayer);
 BulletPosition BulletInit(Position player);
-void BulletMove(BulletPosition *bullet);
-void TankMove(Position *player1, int choosePlayer);
+int BulletMove(BulletPosition *bullet, Position player, Position opponent);
+void TankMove(Position *player1, Position *player2, int choosePlayer);
 void TankRemove(Position player);
-void BulletRemove(BulletPosition bullet);
+void BulletRemove(BulletPosition bullet, Position player1, Position player2);
 void TankRotate(Position *player1, int next, int choosePlayer);
 void score(char p1, char p2);
 void ClearScreen (void);

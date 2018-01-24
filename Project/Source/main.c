@@ -1,17 +1,15 @@
 #include "main.h"
 int main(void){
-	int postojiMetak = 0, random1, random2, gameRunning=1;
+	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
-	Queue queue;
+	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	
-	queue.end = -1; 
-	queue.top = -1;
+	BulletPosition temp;
 	
-	if (SysTick_Config(SystemCoreClock / 1000))
-  { 
-		//handle errors
-    while (1);
-  }
+	initQueue(&bulletQueuePlayer1);
+	initQueue(&bulletQueuePlayer2);
+	
+	srand(13);
 	
 	StartGame();
 	
@@ -20,28 +18,30 @@ int main(void){
 	
 	Delay(TICK_RATE);
 	
-  while(gameRunning == 1){
+	GyroInit(); 
+	
+  while(gameRunning){
 		random1 = rand()%5;
 		random2 = rand()%5;
 		
-		if (queue.end > -1 && queue.top > -1){
-			BulletCycle(&queue);
-		}
-		
+		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
+		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
+
 		ReadFireButton();
 		ReadESP();
 			
-		BulletCycle(&queue);
-		TankCycle(random1, random2, &player1, &player2, &queue, &postojiMetak);
+		TankCycle(random1, random2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
 			
 		WriteESP();
 
-		CheckEndGameCondition(&gameRunning);
+		CheckEndGameCondition(&gameRunning, health1, health2);
+		
+		score(health1, health2);
 		
 		Delay(TICK_RATE);
 	}
 	
-	EndGame();
+	EndGame(health1>health2);
 	
 	while(1);
 }
