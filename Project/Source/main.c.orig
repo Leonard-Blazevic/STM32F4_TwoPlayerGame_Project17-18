@@ -1,7 +1,8 @@
 #include "main.h"
 
 int main(void){
-	int postojiMetak = 0, random1, random2, gameRunning=1;
+<<<<<<< HEAD
+	
 	
 	WifiPackage s1;
 	int i;
@@ -37,6 +38,9 @@ int main(void){
 	}
 	
 	/*int postojiMetak = 0, random1, random2, gameRunning=1;
+=======
+	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
+>>>>>>> main_game_logic
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	

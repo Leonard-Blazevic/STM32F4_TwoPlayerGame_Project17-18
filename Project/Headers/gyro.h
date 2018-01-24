@@ -1,4 +1,5 @@
 #include <stm32f4xx_gpio.h>
+#include <lcdfunctions.h>
 
 #define LED3_GREEN_RCC_GPIOx		RCC_AHB1Periph_GPIOG
 #define LED4_RED_RCC_GPIOx			RCC_AHB1Periph_GPIOG
@@ -14,21 +15,19 @@
 #define L3G_Sensitivity_500dps     (float)57.1429f        
 #define L3G_Sensitivity_2000dps    (float)14.285f
 	
-#define GyroSampleNum						1000
+#define GyroSampleNum						10000
 	
-#define Xangle_down							2000
-#define Xangle_up								-2000
-#define Yangle_left							2000
-#define Yangle_right						-2000
+#define Xangle_down							50
+#define Xangle_up								-50
+#define Yangle_left							-50
+#define Yangle_right						50
 
-#define Xrate_down							10
-#define Xrate_up								-10
-#define Yrate_left							10
-#define Yrate_right							-10
+#define Xrate_down							50
+#define Xrate_up								-50
+#define Yrate_left							-50
+#define Yrate_right							50
 
 
 void GyroInit(void);
-direction GetDirection(void);
-void GpioLEDInit(void);
+Direction GetDirection(void);
 void ReadAngRate (float* GyroData);
-void LEDTest (uint8_t test_dir);
