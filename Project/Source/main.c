@@ -1,42 +1,6 @@
 #include "main.h"
-
 int main(void){
-	int postojiMetak = 0, random1, random2, gameRunning=1;
-	
-	WifiPackage s1;
-	int i;
-	
-	Usart1GpioInit();
-	StartScreen();
-	ClearScreen();
-	EspSync();
-	
-	s1.sync = 97;
-	s1.movement = 48; 
-	s1.readFlag = FALSE;
-	s1.hasFired = 15;
-	SendData(s1);
-	Write("Pocetak", 1);
-	Delay(100000000);
-	
-	while(1)
-	{
-		
-		for(i=0; i<=12; i++)
-		{
-			Delay(50000000); 
-			s1.hasFired = i;
-			SendData(s1);
-			Write("Poslano", i);
-			
-		}
-		
-		ClearScreen();
-
-		
-	}
-	
-	/*int postojiMetak = 0, random1, random2, gameRunning=1;
+	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	
@@ -79,5 +43,5 @@ int main(void){
 	
 	EndGame(health1>health2);
 	
-	while(1);*/
+	while(1);
 }
