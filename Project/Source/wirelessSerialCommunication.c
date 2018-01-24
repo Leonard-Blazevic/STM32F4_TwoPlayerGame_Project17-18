@@ -138,9 +138,9 @@ void EspSync(void)
 		if(c==CONNECTED)
 			break;
 	}
-	
+	while((c=PopReceiveBuffer()) != 'x'); //flushing buffer
 	Write("Connected!", 0);
-	while((c=PopReceiveBuffer()) != 'x');
+	
 	
 #ifdef CLIENT
 	ReadData(&syncReceive);
@@ -152,9 +152,10 @@ void EspSync(void)
 	ReadData(&syncReceive);
 #endif
 
-  if(syncReceive.readFlag == TRUE)
+  if(syncReceive.sync == 98 && syncReceive.readFlag == TRUE)
 		Write("Sync done!", 1);
-			
+	
+	while((c=PopReceiveBuffer()) != 'x'); //flushing buffer
 	
 }
 

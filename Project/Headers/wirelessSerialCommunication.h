@@ -23,7 +23,7 @@ typedef struct {
 	int sync;
 	int movement;
 	int hasFired;
-	int readFlag;
+	Boolean readFlag;
 	
 } WifiPackage;
 
@@ -32,7 +32,5 @@ void Usart1GpioInit(void);
 void EspSync(void);
 void SendData(WifiPackage struct1);
 void ReadData(WifiPackage *struct1);
-void SendDataSimple(char a);
-void ReadDataSimple(char *a) ;
 
 #endif

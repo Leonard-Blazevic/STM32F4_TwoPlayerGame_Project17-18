@@ -14,7 +14,6 @@ void print_status(WifiPackage *package)
 int main(void){
 	
 	WifiPackage s1, s2;
-	int i;
 	
 	s2.movement = 0;
 	s2.hasFired = 0;
