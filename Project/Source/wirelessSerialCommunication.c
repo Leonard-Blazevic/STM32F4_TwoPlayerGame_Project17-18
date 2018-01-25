@@ -163,14 +163,9 @@ void EspSync(void)
 
 void SendData(WifiPackage struct1)  
 {
-	
 	WriteByteToSerial((char)struct1.sync);
 	WriteByteToSerial((char)struct1.movement);
-	WriteByteToSerial((char)struct1.hasFired);
-	WriteByteToSerial((char)struct1.hp1);
-	WriteByteToSerial((char)struct1.hp2);
-	
-   
+	WriteByteToSerial((char)struct1.hasFired); 
 }
 
 void ReadData(WifiPackage *struct1)
@@ -200,20 +195,6 @@ void ReadData(WifiPackage *struct1)
             break;
     }
     struct1->hasFired = (Boolean) c;
-		
-		while (1) {
-        c = PopReceiveBuffer();
-        if (c != 'x')
-            break;
-    }
-    struct1->hp1 = (int) c;
-   
-		while (1) {
-        c = PopReceiveBuffer();
-        if (c != 'x')
-            break;
-    }
-    struct1->hp2 = (int) c;
 		
     struct1->readFlag = TRUE;
 }

@@ -19,6 +19,6 @@
 #include "wirelessSerialCommunication.h"
 
 /*User defines ---------------------------------------------------------------------*/
-#define CLIENT                             //comment out this line when building and loading flash for STM with STATION ESP
+//#define CLIENT                             //comment out this line when building and loading flash for STM with STATION ESP
 #endif
 

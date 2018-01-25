@@ -1,6 +1,7 @@
 #include "main.h"
 
 static __IO uint32_t TimingDelay;
+static int fireLimit = 10;
 
 void Delay(__IO uint32_t nTime){ 
   /*TimingDelay = nTime;
@@ -46,6 +47,7 @@ void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhe
 void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
 	BulletPosition temp;
 	int movement=0;
+	fireLimit--;
 	
 	movement = GetDirection();
 	
@@ -80,10 +82,14 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 	
 	if(ReadFireButton()){
 		temp = BulletInit(*player1);
-    if(temp.life > 0)
+    if(temp.life > 0 && fireLimit <= 0){
 			Add (temp, queue1);
 			(*package1).hasFired = TRUE;
+			fireLimit = 10;
 		}
+		else
+			BulletRemove(temp, *player1, *player2);
+	}
 	
 	TankRemove(*player2);
 		
@@ -106,11 +112,13 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 	
 	TankMove(player2, player1, 1);
         
-   if(package2.hasFired){
+  if(package2.hasFired){
 		temp = BulletInit(*player2);
     if(temp.life > 0)
 			Add (temp, queue2);
-   }
+		else
+		BulletRemove(temp, *player1, *player2);
+	}
 }
 
 int ReadFireButton(){
@@ -120,7 +128,7 @@ int ReadFireButton(){
 		case BT_1:
 			return 1;					
 		case BT_2:
-			return 1;
+			return 0;
 		default:
 			return 0;
 	}	

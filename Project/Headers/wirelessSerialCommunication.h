@@ -24,8 +24,6 @@ typedef struct {
 	Direction movement;
 	Boolean hasFired;
 	Boolean readFlag;
-	int hp1;
-	int hp2;
 	
 } WifiPackage;
 

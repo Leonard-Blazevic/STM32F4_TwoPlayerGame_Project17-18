@@ -9,17 +9,17 @@
 #define	xstart2 120   /* pocetne pozicije prvog igraca */
 #define ystart2 50
 #define xstart1 120		/* pocetne pozicije drugog igraca */
-#define ystart1	300
+#define ystart1	290
 
 #define	xScreenStart 25   
 #define yScreenStart 50
 #define xScreenEnd 215		
 #define yScreenEnd	295
 
-#define xt 1	/* za koliko se mijenja pozicija tenka */
-#define yt 1
-#define xb 2	/* za koliko se mijenja pozicija metka */
-#define yb 2
+#define xt 3	/* za koliko se mijenja pozicija tenka */
+#define yt 3
+#define xb 6	/* za koliko se mijenja pozicija metka */
+#define yb 6
 
 #define distFactor 1.5
 
@@ -109,7 +109,7 @@ BulletPosition BulletInit(Position player){
 		bullet.position.positionX = player.positionX;
 		bullet.position.positionY = player.positionY;
 		bullet.position.direction = player.direction;
-		bullet.life = 10;
+		bullet.life = 50;
 		
 		return bullet;
 	}
