@@ -19,7 +19,9 @@
 #define xt 10	/* za koliko se mijenja pozicija tenka */
 #define yt 10
 #define xb 20	/* za koliko se mijenja pozicija metka */
-#define yb 20   
+#define yb 20
+
+#define distFactor 1.5
 
 void StartScreen(void){         
 	LCD_Init();
@@ -209,37 +211,40 @@ void BulletRemove(BulletPosition bullet, Position player1, Position player2){
 }
 
 void TankMove(Position *player, Position *player2, int choosePlayer){
-	TankRemove(*player);
 	if(choosePlayer == 0)
 		LCD_SetTextColor(LCD_COLOR_BLUE);
 	else
 		LCD_SetTextColor(LCD_COLOR_RED);
 	
 	if(player->direction==UP){							
-		if(player->positionY+yt <= yScreenEnd && player->positionY+yt >= yScreenStart && abs(player->positionY - player2->positionY) > 2*(a+r))	
+		//if(player->positionY+yt <= yScreenEnd && player->positionY+yt >= yScreenStart && !(abs(player->positionY - player2->positionY) < 2*(a+r) && player->positionX == player2->positionX))	
+		if(player->positionY+yt <= yScreenEnd && player->positionY+yt >= yScreenStart && calcDistance(*player, *player2) == 1)
 			player->positionY=player->positionY+yt;
 		
 		LCD_DrawFullCircle(player->positionX, player->positionY, r);
 		LCD_FillTriangle(player->positionX+a/2, player->positionX-a/2, player->positionX, player->positionY+r, player->positionY+r, player->positionY+r+a);
 	}
 	else if(player->direction==RIGHT){
-		if(player->positionX-xt <= xScreenEnd && player->positionX-xt >= xScreenStart && abs(player->positionX - player2->positionX) > 2*(a+r))
+		//if(player->positionX-xt <= xScreenEnd && player->positionX-xt >= xScreenStart && !(abs(player->positionX - player2->positionX) < 2*(a+r) && player->positionY == player2->positionY))
+		if(player->positionX-xt <= xScreenEnd && player->positionX-xt >= xScreenStart && calcDistance(*player, *player2) == 1)
 			player->positionX=player->positionX-xt;
 		
 		LCD_DrawFullCircle(player->positionX, player->positionY, r);
 		LCD_FillTriangle(player->positionX-r, player->positionX-r, player->positionX-r-a, player->positionY+a/2, player->positionY-a/2, player->positionY);
 	}
 	else if(player->direction==DOWN){
-		if(player->positionY-yt <= yScreenEnd && player->positionY-yt >= yScreenStart && abs(player->positionY - player2->positionY) > 2*(a+r))
+		//if(player->positionY-yt <= yScreenEnd && player->positionY-yt >= yScreenStart && !(abs(player->positionY - player2->positionY) < 2*(a+r) && player->positionX == player2->positionX))
+		if(player->positionY-yt <= yScreenEnd && player->positionY-yt >= yScreenStart && calcDistance(*player, *player2) == 1)
 			player->positionY=player->positionY-yt;
 		
 		LCD_DrawFullCircle(player->positionX, player->positionY, r);
 		LCD_FillTriangle(player->positionX-a/2, player->positionX+a/2, player->positionX, player->positionY-r, player->positionY-r, player->positionY-r-a);
 	}
 	else if(player->direction==LEFT){
-		if(player->positionX+xt <= xScreenEnd && player->positionX+xt >= xScreenStart && abs(player->positionX - player2->positionX) > 2*(a+r))
+		//if(player->positionX+xt <= xScreenEnd && player->positionX+xt >= xScreenStart && !(abs(player->positionX - player2->positionX) < 2*(a+r) && player->positionY == player2->positionY))
+		if(player->positionX+xt <= xScreenEnd && player->positionX+xt >= xScreenStart && calcDistance(*player, *player2) == 1)
 			player->positionX=player->positionX+xt;
-		
+			
 		LCD_DrawFullCircle(player->positionX, player->positionY, r);
 		LCD_FillTriangle(player->positionX+r, player->positionX+r, player->positionX+r+a, player->positionY-a/2, player->positionY+a/2, player->positionY);
 	}
@@ -261,62 +266,48 @@ void TankRemove(Position player){
 	}
 }
 
-void TankRotate(Position *player, int next, int choosePlayer){
-	TankRemove(*player);
-	if(choosePlayer == 0)
-		LCD_SetTextColor(LCD_COLOR_BLUE);
-	else
-		LCD_SetTextColor(LCD_COLOR_RED);
-	
-	if(player->direction==UP){
-		if(next==0){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX+r, player->positionX+r, player->positionX+r+a, player->positionY-a/2, player->positionY+a/2, player->positionY);
-		}
-		else if(next==1){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX-r, player->positionX-r, player->positionX-r-a, player->positionY+a/2, player->positionY-a/2, player->positionY);   
-		}
-	}
-	else if(player->direction==RIGHT){
-		if(next==0){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX+a/2, player->positionX-a/2, player->positionX, player->positionY+r, player->positionY+r, player->positionY+r+a);
-		}
-		else if(next==1){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX-a/2, player->positionX+a/2, player->positionX, player->positionY-r, player->positionY-r, player->positionY-r-a);
-		}
-	}
-	else if(player->direction==DOWN){
-		if(next==0){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX-r, player->positionX-r, player->positionX-r-a, player->positionY+a/2, player->positionY-a/2, player->positionY);
-		}
-		else if(next==1){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX+r, player->positionX+r, player->positionX+r+a, player->positionY-a/2, player->positionY+a/2, player->positionY);
-		}
-	}
-	else{
-		if(next==0){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX-a/2, player->positionX+a/2, player->positionX, player->positionY-r, player->positionY-r, player->positionY-r-a);
-		}
-		else if(next==1){
-			LCD_DrawFullCircle(player->positionX, player->positionY, r);
-			LCD_FillTriangle(player->positionX+a/2, player->positionX-a/2, player->positionX, player->positionY+r, player->positionY+r, player->positionY+r+a);
-		}
-	}
-	
-	player->direction+= next == 0 ? (player->direction==1 ? 3 : -1) : (player->direction==4 ? -3 : 1);
-}
-
 void score(char p1, char p2){						
 	char buffer[10];											
 	LCD_SetFont(&Font12x12);
 	LCD_ClearLine(LINE(1));
   LCD_SetTextColor(LCD_COLOR_BLACK);
+	if(p1<5){
+		if(p2<5){
+			sprintf(buffer, " !P1:%d!    !P2:%d!", p1, p2);
+			LCD_SetTextColor(LCD_COLOR_RED);
+		}
+		else
+			sprintf(buffer, " !P1:%d!      P2:%d", p1, p2);
+	}
+	else{
+		if(p2<5)
+			sprintf(buffer, " P1:%d      !P2:%d!", p1, p2);
+		else
+			sprintf(buffer, " P1:%d        P2:%d", p1, p2);
+	}
+  LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
+}
+
+static int calcDistance(Position player1, Position player2){
+	switch(player1.direction){
+		case UP: //povecavanje y
+			if(abs((player1.positionY+yt)-player2.positionY) < 2*(a+r) && abs(player1.positionX-player2.positionX) < distFactor*(a+r))
+				return 0;
+			break;
+		case RIGHT: //smanjivanje x
+			if(abs((player1.positionX-xt)-player2.positionX) < 2*(a+r) && abs(player1.positionY-player2.positionY) < distFactor*(a+r))
+				return 0;
+			break;
+		case DOWN: //smanjivanje y
+			if(abs((player1.positionY-yt)-player2.positionY) < 2*(a+r) && abs(player1.positionX-player2.positionX) < distFactor*(a+r))
+				return 0;
+			break;
+		case LEFT: //povecavanje x
+			if(abs((player1.positionX+xt)-player2.positionX) < 2*(a+r) && abs(player1.positionY-player2.positionY) < distFactor*(a+r))
+				return 0;
+			break;
+	}
+	return 1;
 	if(p1<5){
 		if(p2<5){
 			sprintf(buffer, " !P1:%d!    !P2:%d!", p1, p2);

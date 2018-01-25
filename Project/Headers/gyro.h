@@ -15,17 +15,17 @@
 #define L3G_Sensitivity_500dps     (float)57.1429f        
 #define L3G_Sensitivity_2000dps    (float)14.285f
 	
-#define GyroSampleNum						10000
+#define GyroSampleNum						100
 	
 #define Xangle_down							50
 #define Xangle_up								-50
-#define Yangle_left							-50
-#define Yangle_right						50
+#define Yangle_left							50
+#define Yangle_right						-50
 
 #define Xrate_down							50
 #define Xrate_up								-50
-#define Yrate_left							-50
-#define Yrate_right							50
+#define Yrate_left							50
+#define Yrate_right							-50
 
 
 void GyroInit(void);

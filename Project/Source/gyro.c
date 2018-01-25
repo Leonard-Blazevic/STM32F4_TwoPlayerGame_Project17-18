@@ -70,6 +70,15 @@ Direction GetDirection ()
 //	if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up)
 //		xangle+=Buffer[0]/GyroSampleNum;
 //	
+//	if (Buffer[1] > Yrate_left || Buffer[1] < Yrate_right)
+//		yangle+=Buffer[1]/GyroSampleNum;
+	
+	
+	//float Buffer[2];
+//	ReadAngRate(Buffer);
+//	if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up)
+//		xangle+=Buffer[0]/GyroSampleNum;
+//	
 //	if (Buffer[1] < Yrate_left || Buffer[1] > Yrate_right)
 //		yangle+=Buffer[1]/GyroSampleNum;
 //  if (xangle>100 || xangle<-100) xangle=0;

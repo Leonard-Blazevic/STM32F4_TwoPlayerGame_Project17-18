@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main(void){
-	int random1, gameRunning=1, health1=initialHealth, health2=initialHealth;
+	int gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	WifiPackage s1, s2;
@@ -31,8 +31,7 @@ int main(void){
 	srand(71);
 	
   while(gameRunning){
-		random1 = rand()%5;
-		
+	
 		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
 		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
 
