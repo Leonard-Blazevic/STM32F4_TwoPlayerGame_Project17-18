@@ -165,6 +165,8 @@ void SendData(WifiPackage struct1)
 {
 	
 	WriteByteToSerial((char)struct1.sync);
+	WriteByteToSerial((char)struct1.hP1);
+	WriteByteToSerial((char)struct1.hP2);
 	WriteByteToSerial((char)struct1.movement);
 	WriteByteToSerial((char)struct1.hasFired);
    
@@ -185,6 +187,20 @@ void ReadData(WifiPackage *struct1)
     struct1->sync = (int) c;		
 
     while (1) {
+        c = PopReceiveBuffer();
+        if (c != 'x')
+            break;
+    }
+    struct1->hP1 = (int) c;
+		
+	  while (1) {
+        c = PopReceiveBuffer();
+        if (c != 'x')
+            break;
+    }
+    struct1->hP2 = (int) c;
+		
+		while (1) {
         c = PopReceiveBuffer();
         if (c != 'x')
             break;
