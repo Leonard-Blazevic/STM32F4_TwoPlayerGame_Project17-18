@@ -56,8 +56,6 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 	TankRemove(*player1);
 
 	switch(movement){
-			case NOCHANGE:
-				break;
 			case 1:
 				player1->direction=DOWN;
 				(*package1).movement = 1;
@@ -75,6 +73,7 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 				(*package1).movement = 4;
 				break;
 			default:
+				(*package1).movement = 0;
 				break;
 	}
 	TankMove(player1, player2, 0);
@@ -82,7 +81,7 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 	if(ReadFireButton()){
 		temp = BulletInit(*player1);
     if(temp.life > 0)
-			Add (temp, queue2);
+			Add (temp, queue1);
 			(*package1).hasFired = TRUE;
 		}
 	
@@ -105,7 +104,7 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 			break;
 	}
 	
-	TankMove(player1, player2, 0);
+	TankMove(player2, player1, 1);
         
    if(package2.hasFired){
 		temp = BulletInit(*player2);
