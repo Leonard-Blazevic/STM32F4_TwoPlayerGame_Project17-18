@@ -2,8 +2,6 @@
 #include <WiFiUdp.h>
 #define NAME "ESP_01_AP"
 #define PASSWORD "test12586"
-#define PACKET_SIZE 100
-#define STOP_SIGN '}'
 
 IPAddress staticIP(192,168,1,22);   //IP configuration for STATION (CLIENT)
 IPAddress gateway(192,168,1,15);
@@ -14,8 +12,8 @@ unsigned int apRemotePort = 4281;
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210;  //arbitrary values
-char receivePacket[PACKET_SIZE];           
-char  transmitPacket[PACKET_SIZE];
+char receivePacket;           
+char  transmitPacket;
          
 void setup() {
 
@@ -46,7 +44,7 @@ void loop() {
   
   if (ReceiveByte()) 
   {
-    Udp.beginPacket(stationStaticIP, stationRemotePort);
+    Udp.beginPacket(apStaticIP, apRemotePort);
     Udp.write(transmitPacket);
     Udp.endPacket();
    
