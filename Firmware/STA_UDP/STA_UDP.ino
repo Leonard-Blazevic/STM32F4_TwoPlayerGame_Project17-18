@@ -35,55 +35,36 @@ void setup() {
 }
 
 void loop() {
-  int packetSize = Udp.parsePacket();
+
+  int packetSize = Udp.parsePacket();             //receiving incoming UDP packets
   if (packetSize)
   {
-    // receive incoming UDP packets
-    int len = Udp.read(receivePacket, PACKET_SIZE);
-    if (len > 0)
-    {
-      receivePacket[len] = 0;
-    }
+    receivePacket = Udp.read();
     Serial.print(receivePacket);
-    memset(receivePacket, 0, sizeof(receivePacket));                //resetting receive buffer
     
   }
-    
-  if (receiveUntilStopSign() >= 1) {
-    Udp.beginPacket(apStaticIP, apRemotePort);
+  
+  if (ReceiveByte()) 
+  {
+    Udp.beginPacket(stationStaticIP, stationRemotePort);
     Udp.write(transmitPacket);
     Udp.endPacket();
-    memset(transmitPacket, 0, sizeof(transmitPacket));             //resetting transmit values
    
   }
 
 }
 
-int receiveUntilStopSign(){
-  char receivedByte;
-  int position = 0;
-  int numOfReceivedBytes = 0;
-  
-  while(Serial.available() > 0)
+int ReceiveByte(void){
+  int received=0;
+
+  if(Serial.available() > 0)
   {
-    receivedByte = Serial.read();
-
-    if(receivedByte != STOP_SIGN)
-    {
-     transmitPacket[position++] = receivedByte;
-     numOfReceivedBytes++;
-
-     if(position >= PACKET_SIZE)
-     {
-      position = 0;
-     }
-    }
-    else 
-    {
-      transmitPacket[position] = '\0';
-      return numOfReceivedBytes;
-    }
+    transmitPacket = Serial.read();
+    received = 1;
   }
-  return 0;
+  
+  
+  return received;
   
 }
+
