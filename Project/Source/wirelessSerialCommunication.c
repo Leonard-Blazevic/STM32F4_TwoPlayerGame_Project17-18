@@ -180,21 +180,21 @@ void ReadData(WifiPackage *struct1)
         if (c != 'x')
             break;
     }
-    struct1->sync = c;
+    struct1->sync = (int) c;
 		
     while (1) {
         c = PopReceiveBuffer();
         if (c != 'x')
             break;
     }
-    struct1->movement = c;
+    struct1->movement = (Direction) c;
 		
     while (1) {
         c = PopReceiveBuffer();
         if (c != 'x')
             break;
     }
-    struct1->hasFired = c;
+    struct1->hasFired = (Boolean) c;
     
     struct1->readFlag = TRUE;
 }

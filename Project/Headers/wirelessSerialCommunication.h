@@ -21,8 +21,8 @@ typedef enum{
 typedef struct {
 	
 	int sync;
-	int movement;
-	int hasFired;
+	Direction movement;
+	Boolean hasFired;
 	Boolean readFlag;
 	
 } WifiPackage;

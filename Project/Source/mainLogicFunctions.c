@@ -50,8 +50,8 @@ void TankCycle(int random1, WifiPackage *package1, WifiPackage package2, Positio
 	
 	//movement = GetDirection();
 	
-	(*package1).movement = 0;
-	(*package1).hasFired = 0;
+	(*package1).movement = NOCHANGE;
+	(*package1).hasFired = FALSE;
 	(*package1).sync = 0;
 	
 	switch(random1){
@@ -59,18 +59,18 @@ void TankCycle(int random1, WifiPackage *package1, WifiPackage package2, Positio
 			case 1:
 			case 2:
 				TankMove(player1, player2, 0);
-				(*package1).movement = 1;
+				(*package1).movement = UP;
 				break;
 			case 3:
 				temp = BulletInit(*player1);
 				if(temp.life > 0)
 					Add (temp, queue1);
-				(*package1).hasFired = 1;
+				(*package1).hasFired = TRUE;
 				break;
 			case 4:
 				rnd=rand()%2;
 				TankRotate(player1, rnd, 0);
-				(*package1).movement = rnd+2;
+			  (*package1).movement = rnd == 0 ? RIGHT : LEFT;
 				break;
 		}
 	
@@ -109,13 +109,13 @@ void TankCycle(int random1, WifiPackage *package1, WifiPackage package2, Positio
 		}*/
 		
 		switch(package2.movement){
-			case 1:
+			case UP:
 				TankMove(player2, player1, 1);
 				break;
-			case 2:
+			case RIGHT:
 				TankRotate(player2, 0, 1);
 				break;
-			case 3:
+			case LEFT:
 				TankRotate(player2, 1, 1);
 				break;
 			default:
