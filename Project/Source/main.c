@@ -1,18 +1,9 @@
 #include "main.h"
 
-//#define CLIENT
-
-static char buff[100];
-
-void print_status(WifiPackage *package)
-{
-	ClearScreen();
-	sprintf(buff, "S:%c, M:%c, F:%c", package->sync, package->movement, package->hasFired);
-	Write(buff, 6);
-}
-
 int main(void){
-	
+	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
+	Position player1, player2;
+	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	WifiPackage s1, s2;
 	
 	s2.movement = 0;
@@ -24,28 +15,6 @@ int main(void){
 	EspSync();
 	Delay(100000000);
 	Write("Begin", 4);
-	ClearScreen();
-
-	/*while(1)
-  {
-		for(i=0; i<=9; i++)
-    {
-			Write("Sending", 0);
-			s1.sync = i+49;
-			s1.movement = i+48;
-			s1.hasFired =57-i;
-			SendData(s1);
-			ReadData(&s2);
-			print_status(&s2);
-			Delay(50000000);
-		}
-		ClearScreen();
-	}*/
-	
-	
-	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
-	Position player1, player2;
-	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	
 	BulletPosition temp;
 	
