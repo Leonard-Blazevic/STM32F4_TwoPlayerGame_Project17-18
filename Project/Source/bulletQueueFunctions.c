@@ -1,22 +1,37 @@
 #include "main.h"
 
-int Remove (BulletPosition *element, Queue *queue) {
-	if (queue->end == queue->top) return 0;
-	queue->top++;
-	queue->top %= numberOfAllowedBullets;
-	*element = queue->field[queue->top];
-	return 1;
+void initQueue(Queue *queue){
+	queue->end = NULL;
+	queue->top = NULL;
 }
 
 int Add (BulletPosition element, Queue *queue) {
-	if ((queue->end+1) % numberOfAllowedBullets == queue->top) return 0;
-	queue->end++;
-	queue->end %= numberOfAllowedBullets;
-	queue->field[queue->end] = element;
-	return 1;
+	Atom *created;
+	if ((created = (Atom*)malloc (sizeof (Atom)))) {
+		created->element = element;
+		created->next = NULL;
+		if (queue->top == NULL) {
+			queue->top = created;		
+		} else {
+			(queue->end)->next = created;	
+		}
+		queue->end = created;
+		return 1;
+	}
+	return 0;
+}
+ 
+int Remove (BulletPosition *element, Queue *queue) {
+	Atom *old;
+	if (queue->top) { 
+		*element = (queue->top)->element;
+		old = queue->top;
+		queue->top = (queue->top)->next;
+		free (old);
+		if (queue->top == NULL) queue->end = NULL;
+		return 1;
+  }
+	return 0;
 }
 
-void initQueue(Queue *queue){
-	queue->end = 0; queue->top = 0;
-}
 

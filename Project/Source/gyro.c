@@ -11,9 +11,9 @@ void GyroInit ()
   L3GD20_FilterConfigTypeDef L3GD20_FilterStruct;
 
   L3GD20_InitStruct.Power_Mode = L3GD20_MODE_ACTIVE;
-  L3GD20_InitStruct.Output_DataRate = L3GD20_OUTPUT_DATARATE_4;						// ODR = 760 Hz
+  L3GD20_InitStruct.Output_DataRate = L3GD20_OUTPUT_DATARATE_1;						// ODR = 760 Hz
   L3GD20_InitStruct.Axes_Enable = 0x03;																		// enable X and Y axis
-  L3GD20_InitStruct.Band_Width = L3GD20_BANDWIDTH_4;											
+  L3GD20_InitStruct.Band_Width = L3GD20_BANDWIDTH_1;											
   L3GD20_InitStruct.BlockData_Update = L3GD20_BlockDataUpdate_Continous;
   L3GD20_InitStruct.Endianness = L3GD20_BLE_LSB;													// Little Endian (default)
   L3GD20_InitStruct.Full_Scale = L3GD20_FULLSCALE_250;										// 250 dps
@@ -47,8 +47,10 @@ void ReadAngRate(float* GyroData)
 }
 
 
-direction GetDirection () 
+Direction GetDirection () 
 {
+	xangle=0;
+	yangle=0;
 	int i;
 	for (i=0; i<GyroSampleNum; i++) {
 		
@@ -61,6 +63,15 @@ direction GetDirection ()
 			yangle+=Buffer[1]/GyroSampleNum;
 		}
 	}
+	
+	
+	//float Buffer[2];
+//	ReadAngRate(Buffer);
+//	if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up)
+//		xangle+=Buffer[0]/GyroSampleNum;
+//	
+//	if (Buffer[1] > Yrate_left || Buffer[1] < Yrate_right)
+//		yangle+=Buffer[1]/GyroSampleNum;
 
 	
 	if (xangle > Xangle_down) {

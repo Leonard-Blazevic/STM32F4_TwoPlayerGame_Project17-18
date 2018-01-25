@@ -1,17 +1,23 @@
 #include "main.h"
+
 int main(void){
-	int postojiMetak = 0, random1, random2, gameRunning=1;
+	int gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
-	Queue queue;
+	Queue bulletQueuePlayer1, bulletQueuePlayer2;
+	WifiPackage s1, s2;
 	
-	queue.end = -1; 
-	queue.top = -1;
+	s2.movement = NOCHANGE;
+	s2.hasFired = FALSE;
 	
-	if (SysTick_Config(SystemCoreClock / 1000))
-  { 
-		//handle errors
-    while (1);
-  }
+	Usart1GpioInit();
+	StartScreen();
+	ClearScreen();
+	EspSync();
+	Delay(100000000);
+	Write("Begin", 4);
+	
+	initQueue(&bulletQueuePlayer1);
+	initQueue(&bulletQueuePlayer2);
 	
 	StartGame();
 	
@@ -20,28 +26,35 @@ int main(void){
 	
 	Delay(TICK_RATE);
 	
-  while(gameRunning == 1){
-		random1 = rand()%5;
-		random2 = rand()%5;
+	GyroInit();
+	inputInit();
+	
+	srand(71);
+	
+  while(gameRunning){
+	
+		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
+		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
 		
-		if (queue.end > -1 && queue.top > -1){
-			BulletCycle(&queue);
-		}
+#ifdef CLIENT
+		ReadData(&s2);
+#endif 
 		
-		ReadFireButton();
-		ReadESP();
-			
-		BulletCycle(&queue);
-		TankCycle(random1, random2, &player1, &player2, &queue, &postojiMetak);
-			
-		WriteESP();
+		TankCycle(&s1, s2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
+		
+		SendData(s1);
+		
+#ifndef CLIENT
+		ReadData(&s2);
+#endif 
 
-		CheckEndGameCondition(&gameRunning);
+		CheckEndGameCondition(&gameRunning, health1, health2);
+		score(health1, health2);
 		
 		Delay(TICK_RATE);
 	}
-	
-	EndGame();
-	
+	SendData(s1);
+	EndGame(health1>health2);
+
 	while(1);
 }

@@ -22,91 +22,116 @@ void StartGame(){
 	ClearScreen();
 }
 
-void BulletCycle(Queue *queue){
-	int i;
+void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhealth){
 	BulletPosition temp;
+	Atom *top;
+	top = queue->top;
 	
-	if (queue->end >= queue->top)
-		for (i=queue->top + 1; i <= queue->end; i++){
-			BulletMove(&queue->field[i]);
-			queue->field[i].life--;
+	while(top){
+		if(BulletMove(&top->element, player, opponent) == 1){
+			Remove(&temp, queue);
+			(*playerhealth)--;
 		}
-		else{
-			for (i=0; i <= queue->end; i++){
-				BulletMove(&queue->field[i]);
-				queue->field[i].life--;
-			}
-			for (i=queue->top + 1; i < numberOfAllowedBullets; i++){
-				BulletMove(&queue->field[i]);
-				queue->field[i].life--;
-			}
-		}
+		
+		top->element.life--;
+		top = top->next;
+	}
 			
-	if (queue->field[(queue->top + 1)%numberOfAllowedBullets].life < 0){
+	if (queue->top->element.life < 0){
 		Remove(&temp, queue);
-		BulletRemove(temp);
+		BulletRemove(temp, player, opponent);
 	}
 }
 
-void TankCycle(int random1, int random2, Position *player1, Position *player2, Queue *queue, int *postojiMetak){
-	switch(random1){
-			case 0:
+void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
+	BulletPosition temp;
+	int movement=0;
+	
+	movement = GetDirection();
+	
+	(*package1).movement = NOCHANGE;
+	(*package1).hasFired = FALSE;
+	(*package1).sync = 0;
+	
+	TankRemove(*player1);
+
+	switch(movement){
 			case 1:
+				player1->direction=DOWN;
+				(*package1).movement = 1;
+				break;
 			case 2:
-				TankMove(player1, 0);
+				player1->direction=RIGHT;
+				(*package1).movement = 2;
 				break;
 			case 3:
-				if (postojiMetak == 0){
-					initQueue(queue);
-					*postojiMetak = 1;
-				}
-				Add(BulletInit(*player1), queue);
+				player1->direction=UP;
+				(*package1).movement = 3;
 				break;
 			case 4:
-				TankRotate(player1, rand()%2, 0);
+				player1->direction=LEFT;
+				(*package1).movement = 4;
 				break;
+			default:
+				(*package1).movement = 0;
+				break;
+	}
+	TankMove(player1, player2, 0);
+	
+	if(ReadFireButton()){
+		temp = BulletInit(*player1);
+    if(temp.life > 0)
+			Add (temp, queue1);
+			(*package1).hasFired = TRUE;
 		}
+	
+	TankRemove(*player2);
 		
-		switch(random2){
-			case 0:
-			case 1:
-			case 2:
-				TankMove(player2, 1);
-				break;
-			case 3:
-				if (postojiMetak == 0){
-					initQueue(queue);
-					*postojiMetak = 1;
-				}
-				Add (BulletInit(*player2), queue);
-				break;
-			case 4:
-				TankRotate(player2, rand()%2, 1);
-				break;
-		}
-}
-
-void ReadFireButton(){
+	switch(package2.movement){
+    case 3:
+			player2->direction=DOWN;
+			break;
+    case 2:
+			player2->direction=RIGHT;
+			break;
+    case 1:
+			player2->direction=UP;
+			break;
+    case 4:
+			player2->direction=LEFT;
+			break;
+		default:
+			break;
+	}
 	
+	TankMove(player2, player1, 1);
+        
+   if(package2.hasFired){
+		temp = BulletInit(*player2);
+    if(temp.life > 0)
+			Add (temp, queue2);
+   }
 }
 
-void ReadESP(){
-	
+int ReadFireButton(){
+	button tmp;
+	tmp = popInputBuffer();
+	switch (tmp){
+		case BT_1:
+			return 1;					
+		case BT_2:
+			return 1;
+		default:
+			return 0;
+	}	
 }
 
-void WriteESP(){
-	
+void CheckEndGameCondition(int *gameRunning, int health1, int health2){
+	if(health1 <= 0 || health2 <= 0)
+		(*gameRunning) = 0;
 }
 
-void CheckHit(){
-	
-}
-
-void CheckEndGameCondition(int *gameRunning){
-	
-}
-
-void EndGame(){
+void EndGame(int winner){
 	ClearScreen ();
-	EndScreen(1);
+	EndScreen(winner);
 }

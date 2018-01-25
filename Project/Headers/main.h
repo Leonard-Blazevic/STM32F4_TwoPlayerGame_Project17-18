@@ -16,5 +16,9 @@
 #include "mainLogicFunctions.h"
 #include "input.h"
 #include "gyro.h"
+#include "wirelessSerialCommunication.h"
+
+/*User defines ---------------------------------------------------------------------*/
+//#define CLIENT                             //comment out this line when building and loading flash for STM with STATION ESP
 #endif
 

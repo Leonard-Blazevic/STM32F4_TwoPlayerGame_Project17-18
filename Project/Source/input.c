@@ -76,7 +76,7 @@ static void buttonInit(void){
 	SYSCFG_EXTILineConfig(BUTTON2_EXTI_PortSourceGPIOx, BUTTON2_EXTI_PinSourcex);
 	
 	//button 3
-	GPIO_InitStruct.GPIO_Pin		= BUTTON3_PinNumber;
+	/*GPIO_InitStruct.GPIO_Pin		= BUTTON3_PinNumber;
 	GPIO_Init(BUTTON3_GPIOx, &GPIO_InitStruct);
 	
 	EXTI_InitStruct.EXTI_Line		= BUTTON3_EXTI_Line;
@@ -87,7 +87,7 @@ static void buttonInit(void){
 	NVIC_Init(&NVIC_InitStruct);
 	
 	RCC_AHB1PeriphClockCmd(BUTTON3_RCC_GPIOx, ENABLE);
-	SYSCFG_EXTILineConfig(BUTTON3_EXTI_PortSourceGPIOx, BUTTON3_EXTI_PinSourcex);
+	SYSCFG_EXTILineConfig(BUTTON3_EXTI_PortSourceGPIOx, BUTTON3_EXTI_PinSourcex);*/
 }
 
 static void pushInputBuffer (button bt){
@@ -112,6 +112,7 @@ void inputInit(void){
 	inputBuffer.top = 0;
 	//Enable Interrupts
 	enableButtonInterrupts();
+	popInputBuffer();
 }
 
 button popInputBuffer (void){
