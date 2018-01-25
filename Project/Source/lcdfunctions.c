@@ -6,10 +6,10 @@
 #define a 10
 #define rb 3 			/* velicina metka */
 
-#define	xstart1 120   /* pocetne pozicije prvog igraca */
-#define ystart1 50
-#define xstart2 120		/* pocetne pozicije drugog igraca */
-#define ystart2	300
+#define	xstart2 120   /* pocetne pozicije prvog igraca */
+#define ystart2 50
+#define xstart1 120		/* pocetne pozicije drugog igraca */
+#define ystart1	300
 
 #define	xScreenStart 25   
 #define yScreenStart 50
@@ -62,15 +62,15 @@ Position TankInit(int choosePlayer){
 		LCD_SetTextColor(LCD_COLOR_BLUE);
 		player.positionX = xstart1;
 		player.positionY = ystart1;
-		player.direction = UP;
-		LCD_FillTriangle(player.positionX+a/2, player.positionX-a/2, player.positionX, player.positionY+r, player.positionY+r, player.positionY+r+a);
+		player.direction = DOWN;
+		LCD_FillTriangle(player.positionX-a/2, player.positionX+a/2, player.positionX, player.positionY-r, player.positionY-r, player.positionY-r-a);
 	}
 	else{
 		LCD_SetTextColor(LCD_COLOR_RED);				
 		player.positionX = xstart2;
 		player.positionY = ystart2;
-		player.direction = DOWN;
-		LCD_FillTriangle(player.positionX-a/2, player.positionX+a/2, player.positionX, player.positionY-r, player.positionY-r, player.positionY-r-a);
+		player.direction = UP;
+		LCD_FillTriangle(player.positionX+a/2, player.positionX-a/2, player.positionX, player.positionY+r, player.positionY+r, player.positionY+r+a);
 	}
 	
 	LCD_DrawFullCircle(player.positionX, player.positionY, r);

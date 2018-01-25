@@ -1,13 +1,13 @@
 #include "main.h"
 
 int main(void){
-	int random1, random2, gameRunning=1, health1=initialHealth, health2=initialHealth;
+	int random1, gameRunning=1, health1=initialHealth, health2=initialHealth;
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	WifiPackage s1, s2;
 	
-	s2.movement = 0;
-	s2.hasFired = 0;
+	s2.movement = NOCHANGE;
+	s2.hasFired = FALSE;
 	
 	Usart1GpioInit();
 	StartScreen();
@@ -15,8 +15,6 @@ int main(void){
 	EspSync();
 	Delay(100000000);
 	Write("Begin", 4);
-	
-	BulletPosition temp;
 	
 	initQueue(&bulletQueuePlayer1);
 	initQueue(&bulletQueuePlayer2);
@@ -32,9 +30,10 @@ int main(void){
 	
 	GyroInit(); 
 	
+	srand(1371);
+	
   while(gameRunning){
 		random1 = rand()%5;
-		random2 = rand()%5;
 		
 		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
 		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);

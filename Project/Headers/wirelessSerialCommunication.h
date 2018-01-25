@@ -21,6 +21,8 @@ typedef enum{
 typedef struct {
 	
 	int sync;
+	int hP1;
+	int hP2;
 	Direction movement;
 	Boolean hasFired;
 	Boolean readFlag;
