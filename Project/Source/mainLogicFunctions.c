@@ -88,13 +88,13 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 	TankRemove(*player2);
 		
 	switch(package2.movement){
-    case 1:
+    case 3:
 			player2->direction=DOWN;
 			break;
     case 2:
 			player2->direction=RIGHT;
 			break;
-    case 3:
+    case 1:
 			player2->direction=UP;
 			break;
     case 4:

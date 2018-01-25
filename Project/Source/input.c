@@ -112,6 +112,7 @@ void inputInit(void){
 	inputBuffer.top = 0;
 	//Enable Interrupts
 	enableButtonInterrupts();
+	popInputBuffer();
 }
 
 button popInputBuffer (void){

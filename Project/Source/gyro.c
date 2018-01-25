@@ -59,7 +59,7 @@ Direction GetDirection ()
 		if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up) {
 			xangle+=Buffer[0]/GyroSampleNum;
 		}
-		if (Buffer[1] < Yrate_left || Buffer[1] > Yrate_right) {
+		if (Buffer[1] > Yrate_left || Buffer[1] < Yrate_right) {
 			yangle+=Buffer[1]/GyroSampleNum;
 		}
 	}
@@ -72,17 +72,7 @@ Direction GetDirection ()
 //	
 //	if (Buffer[1] > Yrate_left || Buffer[1] < Yrate_right)
 //		yangle+=Buffer[1]/GyroSampleNum;
-	
-	
-	//float Buffer[2];
-//	ReadAngRate(Buffer);
-//	if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up)
-//		xangle+=Buffer[0]/GyroSampleNum;
-//	
-//	if (Buffer[1] < Yrate_left || Buffer[1] > Yrate_right)
-//		yangle+=Buffer[1]/GyroSampleNum;
-//  if (xangle>100 || xangle<-100) xangle=0;
-//  if (yangle>100 || yangle<-100) yangle=0;
+
 	
 	if (xangle > Xangle_down) {
 		return DOWN;
@@ -91,10 +81,10 @@ Direction GetDirection ()
 		return UP;
 	}
 	else {
-		if (yangle < Yangle_left) {
+		if (yangle > Yangle_left) {
 			return LEFT;
 		}
-		else if (yangle > Yangle_right) {
+		else if (yangle < Yangle_right) {
 			return RIGHT;
 		}
 		else {
