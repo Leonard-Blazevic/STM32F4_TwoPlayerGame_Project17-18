@@ -47,12 +47,18 @@ void Write(char *p, int n){
 
 void EndScreen(int pobjednik){					
 	LCD_Clear(LCD_COLOR_WHITE);															
-	LCD_SetFont(&Font16x24);
-	LCD_SetTextColor(LCD_COLOR_BLACK); 
-	LCD_DisplayStringLine(LINE(3), (uint8_t*)"   Winner is     ");
-	LCD_DisplayStringLine(LINE(5), (uint8_t*)"     player    ");
-	if(pobjednik==1) LCD_DisplayStringLine(LINE(7), (uint8_t*)"       1   ");
-	else LCD_DisplayStringLine(LINE(7), (uint8_t*)"       2   ");
+	LCD_SetFont(&Font16x24); 
+	
+	if(pobjednik==1){
+		LCD_SetTextColor(LCD_COLOR_BLUE);
+		LCD_DisplayStringLine(LINE(3), (uint8_t*)"   You     ");
+		LCD_DisplayStringLine(LINE(5), (uint8_t*)"     win!    ");
+	}
+	else{
+		LCD_SetTextColor(LCD_COLOR_RED);
+		LCD_DisplayStringLine(LINE(3), (uint8_t*)"   You     ");
+		LCD_DisplayStringLine(LINE(5), (uint8_t*)"     loose!    ");
+	}
 }
 
 Position TankInit(int choosePlayer){					

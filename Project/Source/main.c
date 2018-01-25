@@ -19,8 +19,6 @@ int main(void){
 	initQueue(&bulletQueuePlayer1);
 	initQueue(&bulletQueuePlayer2);
 	
-	srand(13);
-	
 	StartGame();
 	
 	player1 = TankInit(0);
@@ -30,7 +28,7 @@ int main(void){
 	
 	GyroInit(); 
 	
-	srand(1371);
+	srand(71);
 	
   while(gameRunning){
 		random1 = rand()%5;
@@ -57,8 +55,8 @@ int main(void){
 		
 		Delay(TICK_RATE);
 	}
-	
+	SendData(s1);
 	EndGame(health1>health2);
-	
+
 	while(1);
 }
