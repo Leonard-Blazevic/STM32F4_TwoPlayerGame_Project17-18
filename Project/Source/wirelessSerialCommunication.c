@@ -139,7 +139,6 @@ void EspSync(void)
 			break;
 	}
 	while((c=PopReceiveBuffer()) != 'x'); //flushing buffer
-	Write("Connected!", 0);
 	
 	
 #ifdef CLIENT

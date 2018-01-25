@@ -47,6 +47,11 @@ int main(void){
 		
 		TankCycle(random1, &s1, s2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
 		
+#ifdef CLIENT
+		s1.hP1 = health1;
+		s1.hP2 = health2;
+#endif 
+		
 		SendData(s1);
 		
 #ifndef CLIENT
@@ -54,10 +59,16 @@ int main(void){
 #endif 
 			
 		WriteESP();
+	
+#ifdef CLIENT
+		CheckEndGameCondition(&gameRunning, s2.hP1, s2.hP2);
+		score(s2.hP1, s2.hP2);
+#endif 
 
+#ifndef CLIENT
 		CheckEndGameCondition(&gameRunning, health1, health2);
-		
 		score(health1, health2);
+#endif
 		
 		Delay(TICK_RATE);
 	}
