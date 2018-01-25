@@ -13,13 +13,13 @@ int main(void){
 	StartScreen();
 	ClearScreen();
 	EspSync();
-	Delay(100000000);
-	Write("Begin", 4);
+	Delay(10000000);
 	
 	initQueue(&bulletQueuePlayer1);
 	initQueue(&bulletQueuePlayer2);
 	
 	StartGame();
+	Delay(10000000);
 	
 	player1 = TankInit(0);
 	player2 = TankInit(1);
@@ -53,6 +53,7 @@ int main(void){
 		
 		Delay(TICK_RATE);
 	}
+	SendData(s1);
 	SendData(s1);
 	EndGame(health1>health2);
 

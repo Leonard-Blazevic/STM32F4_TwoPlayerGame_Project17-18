@@ -1,22 +1,18 @@
 #include <main.h>
 #include <gyro.h>
 
-float Buffer[2];
-float xangle=0;
-float yangle=0;
-
 void GyroInit () 
 {
   L3GD20_InitTypeDef L3GD20_InitStruct;
   L3GD20_FilterConfigTypeDef L3GD20_FilterStruct;
 
   L3GD20_InitStruct.Power_Mode = L3GD20_MODE_ACTIVE;
-  L3GD20_InitStruct.Output_DataRate = L3GD20_OUTPUT_DATARATE_1;						// ODR = 760 Hz
+  L3GD20_InitStruct.Output_DataRate = L3GD20_OUTPUT_DATARATE_4;						// ODR = 760 Hz
   L3GD20_InitStruct.Axes_Enable = 0x03;																		// enable X and Y axis
   L3GD20_InitStruct.Band_Width = L3GD20_BANDWIDTH_1;											
   L3GD20_InitStruct.BlockData_Update = L3GD20_BlockDataUpdate_Continous;
   L3GD20_InitStruct.Endianness = L3GD20_BLE_LSB;													// Little Endian (default)
-  L3GD20_InitStruct.Full_Scale = L3GD20_FULLSCALE_250;										// 250 dps
+  L3GD20_InitStruct.Full_Scale = L3GD20_FULLSCALE_2000;										// 250 dps
   L3GD20_Init(&L3GD20_InitStruct);
   
   L3GD20_FilterStruct.HighPassFilter_Mode_Selection =L3GD20_HPM_NORMAL_MODE_RES;	
@@ -49,47 +45,32 @@ void ReadAngRate(float* GyroData)
 
 Direction GetDirection () 
 {
-	xangle=0;
-	yangle=0;
+	float xangle=0;
+	float yangle=0;
+	float Buffer[2];
+	float xabs, yabs;
 	int i;
+	
 	for (i=0; i<GyroSampleNum; i++) {
-		
 		ReadAngRate(Buffer);
 		
-		if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up) {
-			xangle+=Buffer[0]/GyroSampleNum;
-		}
-		if (Buffer[1] > Yrate_left || Buffer[1] < Yrate_right) {
-			yangle+=Buffer[1]/GyroSampleNum;
-		}
+		xangle+=Buffer[0]/GyroSampleNum;
+		yangle+=Buffer[1]/GyroSampleNum;
 	}
 	
-	
-	//float Buffer[2];
-//	ReadAngRate(Buffer);
-//	if (Buffer[0] > Xrate_down || Buffer[0] < Xrate_up)
-//		xangle+=Buffer[0]/GyroSampleNum;
-//	
-//	if (Buffer[1] > Yrate_left || Buffer[1] < Yrate_right)
-//		yangle+=Buffer[1]/GyroSampleNum;
+	xabs=fabs(xangle);
+	yabs=fabs(yangle);
 
-	
-	if (xangle > Xangle_down) {
-		return DOWN;
+	if(xabs>=yabs) {
+    if (xangle>Xangle_down) return DOWN;
+    else if (xangle<Xangle_up) return UP;
+    else return NOCHANGE;
 	}
-	else if (xangle < Xangle_up){
-		return UP;
-	}
+
 	else {
-		if (yangle > Yangle_left) {
-			return LEFT;
-		}
-		else if (yangle < Yangle_right) {
-			return RIGHT;
-		}
-		else {
-			return NOCHANGE;
-		}
+    if (yangle>Yangle_left) return LEFT;
+    else if (yangle<Yangle_right) return RIGHT;
+    else return NOCHANGE;
 	}
 }
 

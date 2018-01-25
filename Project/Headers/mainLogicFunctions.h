@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "wirelessSerialCommunication.h"
 
-#define TICK_RATE 5000000
+#define TICK_RATE 500000
 #define initialHealth 15
 
 void Delay(__IO uint32_t nTime);
