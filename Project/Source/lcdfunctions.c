@@ -16,10 +16,10 @@
 #define xScreenEnd 215		
 #define yScreenEnd	295
 
-#define xt 10	/* za koliko se mijenja pozicija tenka */
-#define yt 10
-#define xb 20	/* za koliko se mijenja pozicija metka */
-#define yb 20
+#define xt 1	/* za koliko se mijenja pozicija tenka */
+#define yt 1
+#define xb 2	/* za koliko se mijenja pozicija metka */
+#define yb 2
 
 #define distFactor 1.5
 
@@ -59,7 +59,7 @@ void EndScreen(int pobjednik){
 	else{
 		LCD_SetTextColor(LCD_COLOR_RED);
 		LCD_DisplayStringLine(LINE(3), (uint8_t*)"   You     ");
-		LCD_DisplayStringLine(LINE(5), (uint8_t*)"     loose!    ");
+		LCD_DisplayStringLine(LINE(5), (uint8_t*)"     lose!    ");
 	}
 }
 
@@ -126,7 +126,7 @@ int BulletMove(BulletPosition *bullet, Position player, Position opponent){
 	switch(bullet->position.direction){
 		case UP:
 			if(bullet->position.positionY+yb < yScreenEnd){
-				if(bullet->position.positionY < opponent.positionY && bullet->position.positionY+yb >= opponent.positionY-r && bullet->position.positionX == opponent.positionX){
+				if(bullet->position.positionY < opponent.positionY && bullet->position.positionY+yb >= opponent.positionY-r && abs(bullet->position.positionX - opponent.positionX) < r){
 					BulletRemove(*bullet, player, opponent);
 					return 1;//ako je igrac pogoden
 				}
@@ -143,7 +143,7 @@ int BulletMove(BulletPosition *bullet, Position player, Position opponent){
 			
 		case RIGHT:
 			if(bullet->position.positionX-xb > xScreenStart){
-				if(bullet->position.positionX > opponent.positionX && bullet->position.positionX-xb <= opponent.positionX+r && bullet->position.positionY == opponent.positionY){
+				if(bullet->position.positionX > opponent.positionX && bullet->position.positionX-xb <= opponent.positionX+r && abs(bullet->position.positionY - opponent.positionY) < r){
 					BulletRemove(*bullet, player, opponent);
 					return 1;//ako je igrac pogoden
 				}
@@ -160,7 +160,7 @@ int BulletMove(BulletPosition *bullet, Position player, Position opponent){
 			
 		case DOWN:
 			if(bullet->position.positionY-yb > yScreenStart){
-				if(bullet->position.positionY > opponent.positionY && bullet->position.positionY-yb <= opponent.positionY+r && bullet->position.positionX == opponent.positionX){
+				if(bullet->position.positionY > opponent.positionY && bullet->position.positionY-yb <= opponent.positionY+r && abs(bullet->position.positionX - opponent.positionX) < r){
 					BulletRemove(*bullet, player, opponent);
 					return 1;//ako je igrac pogoden
 				}
@@ -177,7 +177,7 @@ int BulletMove(BulletPosition *bullet, Position player, Position opponent){
 			
 		case LEFT:
 			if(bullet->position.positionX+xb < xScreenEnd){
-				if(bullet->position.positionX < opponent.positionX && bullet->position.positionX+xb >= opponent.positionX-r && bullet->position.positionY == opponent.positionY){
+				if(bullet->position.positionX < opponent.positionX && bullet->position.positionX+xb >= opponent.positionX-r && abs(bullet->position.positionY - opponent.positionY) < r){
 					BulletRemove(*bullet, player, opponent);
 					return 1;//ako je igrac pogoden	
 				}
