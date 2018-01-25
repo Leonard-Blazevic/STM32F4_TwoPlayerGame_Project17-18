@@ -53,8 +53,6 @@ void TankCycle(int random1, WifiPackage *package1, WifiPackage package2, Positio
 	(*package1).movement = NOCHANGE;
 	(*package1).hasFired = FALSE;
 	(*package1).sync = 0;
-	(*package1).hP1 = 0;
-	(*package1).hP2 = 0;
 	
 	switch(random1){
 			case 0:
