@@ -308,19 +308,4 @@ static int calcDistance(Position player1, Position player2){
 			break;
 	}
 	return 1;
-	if(p1<5){
-		if(p2<5){
-			sprintf(buffer, " !P1:%d!    !P2:%d!", p1, p2);
-			LCD_SetTextColor(LCD_COLOR_RED);
-		}
-		else
-			sprintf(buffer, " !P1:%d!      P2:%d", p1, p2);
-	}
-	else{
-		if(p2<5)
-			sprintf(buffer, " P1:%d      !P2:%d!", p1, p2);
-		else
-			sprintf(buffer, " P1:%d        P2:%d", p1, p2);
-	}
-  LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
 }

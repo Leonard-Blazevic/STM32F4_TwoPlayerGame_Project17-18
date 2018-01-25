@@ -43,78 +43,88 @@ void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhe
 	}
 }
 
-void TankCycle(int random1, WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
-void TankCycle(Position *player1, Position *player2, Queue *queue1, Queue *queue2){
+void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
 	BulletPosition temp;
 	int movement=0;
-	int rnd=0;
 	
-	//movement = GetDirection();
+	movement = GetDirection();
 	
 	(*package1).movement = NOCHANGE;
 	(*package1).hasFired = FALSE;
 	(*package1).sync = 0;
 	
-				TankMove(player1, player2, 0);
-				(*package1).movement = UP;
-				temp = BulletInit(*player1);
-				if(temp.life > 0)
-					Add (temp, queue1);
-				(*package1).hasFired = TRUE;
-				rnd=rand()%2;
-				TankRotate(player1, rnd, 0);
-			  (*package1).movement = rnd == 0 ? RIGHT : LEFT;
-	
-		switch(package2.movement){
-			case UP:
-				TankMove(player2, player1, 1);
+	TankRemove(*player1);
+
 	switch(movement){
 			case NOCHANGE:
 				break;
+			case 1:
 				player1->direction=DOWN;
+				(*package1).movement = 1;
 				break;
+			case 2:
 				player1->direction=RIGHT;
+				(*package1).movement = 2;
 				break;
-			case RIGHT:
+			case 3:
 				player1->direction=UP;
-				TankRotate(player2, 0, 1);
+				(*package1).movement = 3;
 				break;
-			case LEFT:
-				TankRotate(player2, 1, 1);
+			case 4:
+				player1->direction=LEFT;
+				(*package1).movement = 4;
 				break;
 			default:
 				break;
-		}
-		
-		if(package2.hasFired){
-			temp = BulletInit(*player2);
-			if(temp.life > 0)
-				Add (temp, queue2);
-		}
+	}
+	TankMove(player1, player2, 0);
 	
-		TankMove(player1, player2, 0);
-		
-		/*
+	if(ReadFireButton()){
 		temp = BulletInit(*player1);
-		if(temp.life > 0)
-			Add(temp, queue1);
-		*/
+    if(temp.life > 0)
+			Add (temp, queue2);
+			(*package1).hasFired = TRUE;
+		}
+	
+	TankRemove(*player2);
+		
+	switch(package2.movement){
+    case 1:
+			player2->direction=DOWN;
+			break;
+    case 2:
+			player2->direction=RIGHT;
+			break;
+    case 3:
+			player2->direction=UP;
+			break;
+    case 4:
+			player2->direction=LEFT;
+			break;
+		default:
+			break;
+	}
+	
+	TankMove(player1, player2, 0);
+        
+   if(package2.hasFired){
+		temp = BulletInit(*player2);
+    if(temp.life > 0)
+			Add (temp, queue2);
+   }
 }
 
-void ReadFireButton(){
-	
-}
-
-void ReadESP(){
-	
-}
-
-void WriteESP(){
-	
-}
-
-void CheckHit(){
-	
+int ReadFireButton(){
+	button tmp;
+	tmp = popInputBuffer();
+	switch (tmp){
+		case BT_1:
+			return 1;					
+		case BT_2:
+			return 1;
+		default:
+			return 0;
+	}	
 }
 
 void CheckEndGameCondition(int *gameRunning, int health1, int health2){

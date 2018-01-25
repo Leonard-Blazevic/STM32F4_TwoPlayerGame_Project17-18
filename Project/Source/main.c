@@ -26,7 +26,8 @@ int main(void){
 	
 	Delay(TICK_RATE);
 	
-	GyroInit(); 
+	GyroInit();
+	inputInit();
 	
 	srand(71);
 	
@@ -34,14 +35,12 @@ int main(void){
 	
 		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
 		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
-
-		ReadFireButton();
 		
 #ifdef CLIENT
 		ReadData(&s2);
 #endif 
 		
-		TankCycle(random1, &s1, s2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
+		TankCycle(&s1, s2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
 		
 		SendData(s1);
 		

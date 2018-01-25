@@ -420,6 +420,11 @@
               <FileType>1</FileType>
               <FilePath>.\Source\wirelessSerialCommunication.c</FilePath>
             </File>
+            <File>
+              <FileName>input.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\input.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
