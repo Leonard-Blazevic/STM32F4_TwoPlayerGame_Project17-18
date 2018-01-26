@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main(void){
-	int gameRunning=1, health1=initialHealth, health2=initialHealth;
+	int gameRunning=1, health1=initialHealth, health2=initialHealth, temp=0;
 	Position player1, player2;
 	Queue bulletQueuePlayer1, bulletQueuePlayer2;
 	WifiPackage s1, s2;
@@ -33,20 +33,22 @@ int main(void){
 	
   while(gameRunning){
 	
-		BulletCycle(&bulletQueuePlayer1, player1, player2, &health2);
+		BulletCycle(&bulletQueuePlayer1, player1, player2, &temp);
 		BulletCycle(&bulletQueuePlayer2, player2, player1, &health1);
 		
 #ifdef CLIENT
 		ReadData(&s2);
 #endif 
 		
-		TankCycle(&s1, s2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
+		TankCycle(&health1, &health2, &s1, s2, &player1, &player2, &bulletQueuePlayer1, &bulletQueuePlayer2);
 		
 		SendData(s1);
 		
 #ifndef CLIENT
 		ReadData(&s2);
 #endif 
+		
+		health2 = s2.sync;
 
 		CheckEndGameCondition(&gameRunning, health1, health2);
 		score(health1, health2);

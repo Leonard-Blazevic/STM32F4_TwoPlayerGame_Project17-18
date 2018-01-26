@@ -10,7 +10,7 @@
 void Delay(__IO uint32_t nTime);
 void StartGame(void);
 void BulletCycle(Queue *queue, Position plyer, Position opponent, int *playerPoints);
-void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2);
+void TankCycle(int *health1, int *health2, WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2);
 int ReadFireButton(void);
 void CheckEndGameCondition(int *gameRunning, int points1, int points2);
 void EndGame(int winner);
