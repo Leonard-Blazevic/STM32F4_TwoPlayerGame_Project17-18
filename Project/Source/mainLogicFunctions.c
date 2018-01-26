@@ -19,7 +19,7 @@ void TimingDelay_Decrement(void){
 
 void StartGame(){
 	StartScreen();
-	Delay(TICK_RATE);
+	Delay(50000000);
 	ClearScreen();
 }
 

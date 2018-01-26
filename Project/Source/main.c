@@ -47,6 +47,8 @@ int main(void){
 #ifndef CLIENT
 		ReadData(&s2);
 #endif 
+		
+		health2 = s2.sync;
 
 		CheckEndGameCondition(&gameRunning, health1, health2);
 		score(health1, health2);

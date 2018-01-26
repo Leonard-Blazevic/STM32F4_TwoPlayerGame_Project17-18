@@ -31,10 +31,8 @@ void StartScreen(void){
   LCD_Clear(LCD_COLOR_WHITE);
   LCD_SetFont(&Font16x24);
   LCD_SetTextColor(LCD_COLOR_BLACK); 
-  LCD_DisplayStringLine(LINE(3), (uint8_t*)"   For start     ");
-	LCD_DisplayStringLine(LINE(5), (uint8_t*)"     press    ");
-	LCD_DisplayStringLine(LINE(7), (uint8_t*)"     button     ");
-	
+  LCD_DisplayStringLine(LINE(3), (uint8_t*)"   Starting     ");
+	LCD_DisplayStringLine(LINE(5), (uint8_t*)"     game...    ");
 }
 
 void ClearScreen (void) {
