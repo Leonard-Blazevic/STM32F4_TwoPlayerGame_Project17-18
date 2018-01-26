@@ -44,7 +44,7 @@ void BulletCycle(Queue *queue, Position player, Position opponent, int *playerhe
 	}
 }
 
-void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
+void TankCycle(int *health1, int *health2, WifiPackage *package1, WifiPackage package2, Position *player1, Position *player2, Queue *queue1, Queue *queue2){
 	BulletPosition temp;
 	int movement=0;
 	fireLimit--;
@@ -53,7 +53,7 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 	
 	(*package1).movement = NOCHANGE;
 	(*package1).hasFired = FALSE;
-	(*package1).sync = 0;
+	(*package1).sync = (*health1);
 	
 	TankRemove(*player1);
 
@@ -119,6 +119,8 @@ void TankCycle(WifiPackage *package1, WifiPackage package2, Position *player1, P
 		else
 		BulletRemove(temp, *player1, *player2);
 	}
+	
+	*health2 = package2.sync;
 }
 
 int ReadFireButton(){
